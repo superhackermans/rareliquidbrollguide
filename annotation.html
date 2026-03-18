@@ -82,36 +82,62 @@
 
 <section id="format-broll">
   <h2><span class="ch-label">14</span>B-Roll Annotation Format</h2>
-  <p>Every B-roll reference must follow this exact format. No exceptions.</p>
-  <div class="format-block"><span class="label">Correct</span>[https://www.youtube.com/watch?v=QZ85VPgCOCM, 0:18 - 0:29]
+  <p>When you find a video clip to use as B-roll, you annotate it directly in the script next to the line it belongs to. The format is the <strong>raw YouTube URL</strong> plus the <strong>exact start and end timestamps</strong> in brackets. No video titles, no vague time references.</p>
+
+  <h3>Correct Format</h3>
+  <div class="format-block"><span class="label">Always use this</span>[https://www.youtube.com/watch?v=QZ85VPgCOCM, 0:18 - 0:29]
 [https://www.youtube.com/watch?v=nbs_s6_L_ao, 22:10 - 22:14]</div>
+
+  <h3>Common Mistakes</h3>
+  <p>These will get flagged and sent back for revision:</p>
   <div class="format-block bad"><span class="label">Wrong &mdash; Do Not Do These</span>[Goldman Sachs CEO Interview, 0:18 - 0:29]     &larr; No titles, raw URLs only
 [https://youtube.com/watch?v=abc, around 3 min] &larr; No vague timestamps
 [https://youtube.com/watch?v=abc]                &larr; Never omit timestamps</div>
-  <h3>Alternate Options</h3>
+
+  <h3>Providing Alternate Options</h3>
+  <p>If you find two good clips for the same script line, include both separated by "OR" so the best one can be chosen:</p>
   <div class="format-block">[https://youtube.com/watch?v=abc, 4:05 - 4:09] OR [https://youtube.com/watch?v=xyz, 16:10 - 16:42]</div>
 </section>
 
 <section id="format-images">
   <h2><span class="ch-label">15</span>Image Annotation Format</h2>
-  <div class="format-block"><span class="label">All Formats</span>[pic 1]                                    &mdash; basic placement
-[pic 7, highlight "specific text to underline"]  &mdash; emphasize a phrase
-[pic 12, zoom]                                   &mdash; gradual zoom
-[pic 15, pan left-to-right]                      &mdash; horizontal pan
-[pic 9, zoom in on face]                         &mdash; zoom to specific detail
-[pic 8, zoom and highlight "key phrase"]         &mdash; zoom + text emphasis</div>
+  <p>Still images are numbered sequentially (1.png, 2.png, 3.png) and uploaded as a folder to Slack. In the script, you reference them by number. You can also add instructions for how the image should be displayed on screen &mdash; highlighting a phrase, zooming in, or panning across it.</p>
+
+  <h3>Basic Placement</h3>
+  <div class="format-block">[pic 1]</div>
+  <p>Just places the image on screen with default treatment.</p>
+
+  <h3>Highlighting Text</h3>
+  <div class="format-block">[pic 7, highlight "specific text to underline"]</div>
+  <p>The specified phrase gets visually emphasized on the image. Use this when showing news articles or documents where a particular line matters.</p>
+
+  <h3>Zoom &amp; Pan</h3>
+  <div class="format-block">[pic 12, zoom]
+[pic 15, pan left-to-right]
+[pic 9, zoom in on face]</div>
+  <p>Adds motion to a static image. Zoom gradually pushes in; pan moves horizontally across the image. Use these to keep still images from feeling flat.</p>
+
+  <h3>Combined Instructions</h3>
+  <div class="format-block">[pic 8, zoom and highlight "key phrase"]</div>
+  <p>You can combine zoom/pan with highlighting when both are needed.</p>
 </section>
 
 <section id="format-audio">
   <h2><span class="ch-label">16</span>Audio &amp; Overlay Formats</h2>
+  <p>Beyond standard B-roll and images, there are three special annotation types: clips where the original audio plays, on-screen graphic overlays, and post-rough-cut timestamp anchoring.</p>
+
   <h3>B-Roll with Audio</h3>
+  <p>When a clip's original audio should play instead of Ben's voiceover, add <code>WITH AUDIO</code> at the end. This is rare &mdash; only 3-5 times per video.</p>
   <div class="format-block">[https://www.youtube.com/watch?v=xyz, 4:05 - 4:09, WITH AUDIO]</div>
+
   <h3>Overlays</h3>
+  <p>Overlays are on-screen graphics that appear over the footage &mdash; logos, arrows, labels, or text. Describe exactly what should appear and when:</p>
   <div class="format-block">[show Goldman Sachs logo when host says "Goldman"]
 [arrow pointing to player A labeled "Solomon", player B labeled "Goldman Sachs"]
 [on-screen text: "95 hours per week" when host says the statistic]</div>
+
   <h3>Timestamp Anchoring (Post Rough-Cut)</h3>
-  <p>After rough-cut, add the video timeline timestamp so each asset is placed exactly:</p>
+  <p>After the rough-cut is done, go back and add the video timeline position (MMSS format) so each asset is placed at the exact moment in the video:</p>
   <div class="format-block"><span class="label">Format</span>MMSS - [asset reference]
 0342 - [https://youtube.com/watch?v=abc, 1:03 - 1:08]</div>
 </section>
