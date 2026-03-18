@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>rareliquid | B-Roll Guidelines</title>
+<title>Sourcing & Quality | rareliquid B-Roll Guidelines</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <script>try{if(localStorage.getItem('rl-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
 </head>
-<body data-page="index.html">
+<body data-page="sourcing.html">
 
 <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
 <div class="sidebar-overlay" id="sidebar-overlay"></div>
@@ -18,7 +18,6 @@
 <svg class="im" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
 </button>
 
-<!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <a href="index.html" class="sidebar-logo"><span>rareliquid</span>B-Roll Production Guidelines</a>
   <div class="toc-group">
@@ -74,27 +73,84 @@
 </aside>
 
 <div class="main">
-
-<!-- HERO -->
-<section class="hero" id="top">
-  <h1>B-Roll, Still Images &amp; <em>Custom Visuals</em> Guidelines</h1>
-  <p class="hero-sub">The single source of truth for anyone preparing visuals for a rareliquid documentary. Follow these guidelines exactly to eliminate revision rounds.</p>
-  <div class="hero-meta"><span><strong>75-90</strong> B-roll clips</span><span><strong>55-70</strong> still images</span><span><strong>1-3</strong> custom visuals</span><span><strong>0</strong> gaps allowed</span></div>
-</section>
-
 <div class="content-wrap">
-  <div class="page-nav">
-    <span></span>
-    <a href="start-here.html" class="next">Start Here &rarr;</a>
-  </div>
+
+<div class="page-header">
+  <h1>Sourcing &amp; Quality</h1>
+  <p>Where to find clips, how long they should be, and quality standards.</p>
 </div>
 
-</div><!-- /main -->
+<section id="source-priority">
+  <h2><span class="ch-label">10</span>Source Priority</h2>
+  <p>When looking for B-roll, search in this exact order. Only move to the next tier if the previous one has nothing usable.</p>
+  <table>
+    <thead><tr><th>Priority</th><th>Source Type</th><th>Examples</th><th>Quality</th></tr></thead>
+    <tbody>
+      <tr><td><strong style="color:var(--a3)">1 (Best)</strong></td><td>TV interviews &amp; news coverage</td><td>Bloomberg, CNBC, Fox Business interviews; news segments</td><td>Highest impact</td></tr>
+      <tr><td><strong>2</strong></td><td>Official company footage</td><td>Earnings calls, investor days, conference keynotes</td><td>Strong credibility</td></tr>
+      <tr><td><strong>3</strong></td><td>Documentaries / biographical clips</td><td>Existing docs, biography channels</td><td>Good depth</td></tr>
+      <tr><td><strong>4</strong></td><td>General financial news footage</td><td>Market floor, trading screens, office environments</td><td>Filler only</td></tr>
+      <tr><td><strong style="color:var(--a5)">5 (Last)</strong></td><td>Stock footage</td><td>Generic office shots, city skylines</td><td>Under 10% max</td></tr>
+    </tbody>
+  </table>
+  <div class="callout critical">
+    <div class="callout-title">Critical</div>
+    <p>Stock footage (Priority 5) should make up no more than 10% of your total B-roll. If you find yourself relying on it heavily, you need to search harder for Tier 1-3 sources. Always pick the more visually engaging option.</p>
+  </div>
+</section>
 
-<footer>
-  <p>rareliquid &middot; Video Production Pipeline Guidelines &middot; v1.1</p>
-</footer>
+<section id="clip-rules">
+  <h2><span class="ch-label">11</span>Clip Duration Rules</h2>
+  <table>
+    <thead><tr><th>Rule</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td>Minimum usable duration</td><td><strong>3 seconds.</strong> No isolated clips under 3 seconds.</td></tr>
+      <tr><td>Maximum single clip</td><td><strong>10 seconds</strong> before a cut is needed</td></tr>
+      <tr><td>Ideal clip length</td><td><strong>4-7 seconds</strong></td></tr>
+      <tr><td>Transition clips</td><td>2-3 seconds (only for cuts between sections)</td></tr>
+    </tbody>
+  </table>
+</section>
 
+<section id="historical">
+  <h2><span class="ch-label">12</span>Historical Accuracy</h2>
+  <p><strong>This is where past deliveries failed the most.</strong> If the script is talking about something that happened in 1990, you cannot use footage of that person from 2024.</p>
+  <ul>
+    <li>If the script discusses events from a specific era, the B-roll must be <strong>from that era or visually neutral</strong></li>
+    <li>When a person is discussed at a young age, search for "[person name] young" or "[person name] early career"</li>
+    <li>If no era-appropriate footage exists, use a still image (news clipping, document, yearbook photo) rather than modern footage</li>
+    <li>For historical companies (Drexel Burnham Lambert, Bear Stearns), look for <strong>archival news coverage</strong>, not modern retrospectives</li>
+  </ul>
+  <div class="callout warn">
+    <div class="callout-title">Real Example</div>
+    <p>In the Solomon documentary, a clip at timestamp 4:20 had to be removed because it showed Solomon in the present day during a section about his time at Drexel in the 1980s. A clip of modern computers was also replaced because it showed modern technology during a 1980s section.</p>
+  </div>
+</section>
+
+<section id="relevance">
+  <h2><span class="ch-label">13</span>Relevance Standard &amp; the Better Option Rule</h2>
+  <p>Every clip must pass this test: <strong>if someone watched the clip on mute without context, could they reasonably guess what the narrator is talking about?</strong> If no, the clip is not relevant enough.</p>
+  <div class="card-grid">
+    <div class="card" style="border-left:4px solid var(--a5)">
+      <h4 style="color:var(--a5)">Bad</h4>
+      <p>Script says "Solomon joins Drexel Burnham Lambert" and B-roll shows a <em>generic modern trading floor</em>.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--a3)">
+      <h4 style="color:var(--a3)">Good</h4>
+      <p>Script says "Solomon joins Drexel Burnham Lambert" and B-roll shows a <em>1980s news clip about Drexel</em>, or an archival photo of Drexel's office, or footage of Michael Milken.</p>
+    </div>
+  </div>
+  <p><strong>The "Better Option" Rule:</strong> If you find two clips for the same moment, always use the more visually interesting one. If a still image is more relevant and interesting than a generic video clip, use the image.</p>
+</section>
+
+<div class="page-nav">
+  <a href="asset-types.html">&larr; Asset Types</a>
+  <a href="annotation.html" class="next">Annotation Format &rarr;</a>
+</div>
+
+</div></div>
+
+<footer><p>rareliquid &middot; Video Production Pipeline Guidelines &middot; v1.1</p></footer>
 <script src="js/main.js"></script>
 </body>
 </html>

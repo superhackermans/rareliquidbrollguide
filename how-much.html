@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>rareliquid | B-Roll Guidelines</title>
+<title>How Much You Need | rareliquid B-Roll Guidelines</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <script>try{if(localStorage.getItem('rl-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
 </head>
-<body data-page="index.html">
+<body data-page="how-much.html">
 
 <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
 <div class="sidebar-overlay" id="sidebar-overlay"></div>
@@ -18,7 +18,6 @@
 <svg class="im" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
 </button>
 
-<!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <a href="index.html" class="sidebar-logo"><span>rareliquid</span>B-Roll Production Guidelines</a>
   <div class="toc-group">
@@ -74,27 +73,64 @@
 </aside>
 
 <div class="main">
-
-<!-- HERO -->
-<section class="hero" id="top">
-  <h1>B-Roll, Still Images &amp; <em>Custom Visuals</em> Guidelines</h1>
-  <p class="hero-sub">The single source of truth for anyone preparing visuals for a rareliquid documentary. Follow these guidelines exactly to eliminate revision rounds.</p>
-  <div class="hero-meta"><span><strong>75-90</strong> B-roll clips</span><span><strong>55-70</strong> still images</span><span><strong>1-3</strong> custom visuals</span><span><strong>0</strong> gaps allowed</span></div>
-</section>
-
 <div class="content-wrap">
-  <div class="page-nav">
-    <span></span>
-    <a href="start-here.html" class="next">Start Here &rarr;</a>
-  </div>
+
+<div class="page-header">
+  <h1>How Much You Need</h1>
+  <p>Per-minute targets and visual variety rules.</p>
 </div>
 
-</div><!-- /main -->
+<section id="targets">
+  <h2><span class="ch-label">03</span>How Much You Need</h2>
+  <p>Use the slider to set your script duration. The numbers below show how many assets you need to find.</p>
 
-<footer>
-  <p>rareliquid &middot; Video Production Pipeline Guidelines &middot; v1.1</p>
-</footer>
+  <div class="calc-wrap">
+    <div class="calc-slider-row">
+      <span style="font-size:.85rem;color:var(--text-muted)">Script length:</span>
+      <input type="range" id="durSlider" min="1" max="20" value="15" step="1">
+      <div class="calc-dur"><span id="durVal">15</span> min</div>
+    </div>
+    <div class="calc-grid">
+      <div class="calc-card broll">
+        <div class="calc-num" id="calcBroll">75 &ndash; 90</div>
+        <div class="calc-lbl">Unique B-Roll Clips</div>
+      </div>
+      <div class="calc-card stills">
+        <div class="calc-num" id="calcStills">55 &ndash; 70</div>
+        <div class="calc-lbl">Unique Still Images</div>
+      </div>
+      <div class="calc-card custom">
+        <div class="calc-num" id="calcCustom">1 &ndash; 3</div>
+        <div class="calc-lbl">Custom Visuals (HTML)</div>
+      </div>
+      <div class="calc-card total">
+        <div class="calc-num" id="calcTotal">~148</div>
+        <div class="calc-lbl">Total Unique Assets</div>
+      </div>
+      <div class="calc-card stock">
+        <div class="calc-num" id="calcStock">&lt; <span id="calcStockN">9</span></div>
+        <div class="calc-lbl">Max Stock Footage Clips (10%)</div>
+      </div>
+    </div>
+  </div>
 
+  <p style="font-size:.9rem;color:var(--text-muted)">These are hard minimums, not suggestions. When in doubt, overshoot &mdash; it is always better to deliver too much than too little. If you finish under these counts, go back and find more.</p>
+</section>
+
+<section id="variety">
+  <h2><span class="ch-label">04</span>Visual Variety Rule</h2>
+  <p><strong>Never have 3 or more consecutive still images without a video clip in between.</strong> If you find yourself stacking images back-to-back, search harder for a video source to break up the sequence. The visual rhythm should alternate between video clips, still images, and the host.</p>
+  <p>Approximately <strong>16 visual changes happen per minute</strong> in our documentaries. That means a new cut roughly every 3-4 seconds.</p>
+</section>
+
+<div class="page-nav">
+  <a href="start-here.html">&larr; Start Here</a>
+  <a href="asset-types.html" class="next">Asset Types &rarr;</a>
+</div>
+
+</div></div>
+
+<footer><p>rareliquid &middot; Video Production Pipeline Guidelines &middot; v1.1</p></footer>
 <script src="js/main.js"></script>
 </body>
 </html>
