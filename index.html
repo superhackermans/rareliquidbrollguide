@@ -1,666 +1,827 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>rareliquid | B-Roll Guidelines</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace']
-          }
-        }
-      }
-    }
-  </script>
-  <script>
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  </script>
-  <style>
-    .card-glow { box-shadow: 0 0 0 1px rgba(59,130,246,0.08); }
-    .dark .card-glow { box-shadow: 0 0 0 1px rgba(59,130,246,0.15); }
-    .stat-card { transition: transform 0.15s ease, box-shadow 0.15s ease; }
-    .stat-card:hover { transform: translateY(-2px); }
-    .code-wrap { position: relative; }
-    .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; }
-    details[open] summary svg { transform: rotate(180deg); }
-    summary svg { transition: transform 0.2s ease; }
-    .badge-pulse { animation: pulse-border 2s ease-in-out infinite; }
-    @keyframes pulse-border { 0%,100%{border-color:rgba(39,174,96,0.4)} 50%{border-color:rgba(39,174,96,0.9)} }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>rareliquid | B-Roll Guidelines</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem('rl-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
+<style>
+:root{--bg:#0a0c12;--bg-card:#10131c;--border:#1a1f30;--border-accent:#252d45;--text:#b8bfce;--text-muted:#5e6880;--text-bright:#dce1ec;--heading:#eef1f8;--accent:#4a90e2;--accent-glow:rgba(74,144,226,.1);--a2:#7c6dd8;--a3:#2ebd80;--a4:#e8943a;--a5:#e05c7a;--code-bg:#141825;--serif:'Instrument Serif',Georgia,serif;--sans:'DM Sans',-apple-system,sans-serif;--mono:'JetBrains Mono',monospace;--sidebar-w:260px}
+[data-theme="light"]{--bg:#f3f4f8;--bg-card:#fff;--border:#d8dce6;--border-accent:#bfc5d4;--text:#3a4055;--text-muted:#6e7590;--text-bright:#1a1e30;--heading:#0d1020;--accent:#2a6bc9;--accent-glow:rgba(42,107,201,.07);--a2:#6550b0;--a3:#1a8c5e;--a4:#c47a1a;--a5:#b84060;--code-bg:#e8eaf0}
+*{margin:0;padding:0;box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+section a,p a,.callout a{color:var(--accent);text-decoration:none}
+section a:hover,p a:hover,.callout a:hover{text-decoration:underline}
+html{scroll-behavior:smooth;scroll-padding-top:2rem}
+html,html *{transition:background-color .3s,color .3s,border-color .3s}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.78;font-size:17px;-webkit-font-smoothing:antialiased}
+
+/* SIDEBAR */
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--bg-card);border-right:1px solid var(--border);overflow-y:auto;z-index:150;padding:1.5rem 0 2rem}
+.sidebar::-webkit-scrollbar{width:3px}.sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.sidebar-logo{padding:0 1.2rem .8rem;font-family:var(--serif);font-size:1rem;color:var(--heading);line-height:1.3;border-bottom:1px solid var(--border);margin-bottom:.6rem;text-decoration:none;display:block;cursor:pointer}
+.sidebar-logo span{font-size:.7rem;color:var(--accent);font-family:var(--mono);display:block;margin-bottom:.15rem;letter-spacing:.05em;text-transform:uppercase}
+.toc-group-title{padding:.55rem 1.2rem .3rem;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);background:var(--accent-glow)}
+.toc-link{display:flex;align-items:baseline;gap:.5rem;padding:.35rem 1.2rem;font-size:.82rem;color:var(--text-muted);text-decoration:none;border-left:2px solid transparent;transition:all .2s}
+.toc-link:hover,.toc-link.active{color:var(--heading);background:var(--accent-glow);border-left-color:var(--accent)}
+.toc-link .toc-num{font-family:var(--mono);font-size:.72rem;color:var(--accent);min-width:2.2ch}
+.main{margin-left:var(--sidebar-w)}
+
+/* HAMBURGER */
+.hamburger{display:none;position:fixed;top:1rem;left:1rem;z-index:250;width:40px;height:40px;border-radius:10px;background:var(--bg-card);border:1px solid var(--border);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.hamburger span{display:block;width:18px;height:2px;background:var(--text-muted);border-radius:1px;transition:transform .3s,opacity .3s}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:140}
+@media(max-width:900px){.sidebar{transform:translateX(-100%);width:280px}.sidebar.open{transform:translateX(0)}.sidebar-overlay.open{display:block}.hamburger{display:flex}.main{margin-left:0}}
+
+/* THEME TOGGLE */
+.toggle{position:fixed;top:1.2rem;right:1.2rem;z-index:1000;width:44px;height:44px;border-radius:50%;border:1px solid var(--border-accent);background:var(--bg-card);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.toggle:hover{transform:scale(1.08);border-color:var(--accent)}
+.toggle .is,.toggle .im{position:absolute;transition:transform .4s,opacity .3s;width:18px;height:18px}
+.toggle .is{opacity:1;transform:rotate(0) scale(1)}.toggle .im{opacity:0;transform:rotate(-90deg) scale(.5)}
+[data-theme="light"] .toggle .is{opacity:0;transform:rotate(90deg) scale(.5)}
+[data-theme="light"] .toggle .im{opacity:1;transform:rotate(0) scale(1)}
+
+/* HERO */
+.hero{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-28%;left:50%;transform:translateX(-50%);width:750px;height:750px;background:radial-gradient(circle,var(--accent-glow) 0%,transparent 70%);pointer-events:none}
+.hero h1{font-family:var(--serif);font-size:clamp(2.2rem,5vw,3.2rem);color:var(--heading);line-height:1.15;max-width:700px;font-weight:400;margin-bottom:1rem}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:1.02rem;color:var(--text-muted);max-width:580px;line-height:1.7;margin-bottom:2rem}
+.hero-meta{display:flex;gap:2rem;font-size:.82rem;color:var(--text-muted);flex-wrap:wrap;justify-content:center}
+.hero-meta strong{color:var(--accent)}
+
+/* CONTENT */
+.content-wrap{max-width:820px;margin:0 auto;padding:0 2rem 4rem}
+section{padding:3rem 0 2rem}
+section+section{border-top:1px solid var(--border)}
+section h2{font-family:var(--serif);font-size:1.9rem;color:var(--heading);margin-bottom:.3rem;font-weight:400;line-height:1.25}
+section h2 .ch-label{font-family:var(--mono);font-size:.8rem;color:var(--accent);display:block;margin-bottom:.4rem;letter-spacing:.06em}
+section h3{font-size:1.15rem;color:var(--heading);margin:2rem 0 .6rem;font-weight:600}
+section h4{font-size:1rem;color:var(--text-bright);margin:1.5rem 0 .4rem;font-weight:600}
+section p{margin-bottom:1rem}
+section ul,section ol{margin:0 0 1.2rem 1.4rem}
+section li{margin-bottom:.4rem;font-size:.95rem}
+strong{color:var(--text-bright);font-weight:600}
+
+/* TABLES */
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.9rem}
+th{text-align:left;padding:.6rem .8rem;border-bottom:2px solid var(--border-accent);color:var(--heading);font-weight:600;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em}
+td{padding:.55rem .8rem;border-bottom:1px solid var(--border);vertical-align:top}
+tr:hover td{background:var(--accent-glow)}
+
+/* CODE / PROMPT */
+code{font-family:var(--mono);font-size:.88em;background:var(--code-bg);padding:.15rem .4rem;border-radius:4px;color:var(--a2)}
+pre{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem 1.5rem;overflow-x:auto;font-size:.85rem;line-height:1.6;margin:1rem 0;max-width:100%}
+pre code{background:none;padding:0;color:var(--text)}
+.format-block{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:1rem 1.3rem;margin:1rem 0;font-family:var(--mono);font-size:.85rem;line-height:1.7;color:var(--a3)}
+.format-block.bad{color:var(--a5)}
+.format-block .label{font-family:var(--mono);font-size:.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;display:block;font-weight:500}
+
+/* CALLOUTS */
+.callout{border:1px solid var(--border-accent);border-radius:8px;padding:1.2rem 1.4rem;margin:1.2rem 0;background:var(--bg-card)}
+.callout.warn{border-left:4px solid var(--a4)}.callout.critical{border-left:4px solid var(--a5)}.callout.info{border-left:4px solid var(--accent)}.callout.ok{border-left:4px solid var(--a3)}
+.callout .callout-title{font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem}
+.callout.warn .callout-title{color:var(--a4)}.callout.critical .callout-title{color:var(--a5)}.callout.info .callout-title{color:var(--accent)}.callout.ok .callout-title{color:var(--a3)}
+
+/* CARDS */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin:1.2rem 0}
+.card h4{margin-top:0}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1.2rem 0}
+
+/* BLOCKQUOTE */
+.pq{border-left:3px solid var(--a2);padding:.9rem 0 .9rem 1.4rem;margin:1.8rem 0;font-family:var(--sans);font-size:1.02rem;color:var(--text-bright);font-style:normal;line-height:1.7}
+
+/* CHECKLIST */
+.checklist label{display:flex;align-items:flex-start;gap:.6rem;padding:.4rem 0;cursor:pointer;font-size:.92rem}
+.checklist input[type="checkbox"]{margin-top:.25rem;accent-color:var(--a3)}
+
+/* STAT ROW */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.5rem 0}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.2rem;text-align:center}
+.stat-box .num{font-family:var(--mono);font-size:1.8rem;font-weight:700;color:var(--accent);line-height:1.2}
+.stat-box .lbl{font-size:.78rem;color:var(--text-muted);margin-top:.3rem}
+
+/* FOOTER */
+footer{padding:3rem 0;text-align:center;font-size:.82rem;color:var(--text-muted);border-top:1px solid var(--border)}
+
+/* RESPONSIVE */
+@media(max-width:700px){.hero h1{font-size:2rem}.content-wrap{padding:0 1.2rem 3rem}section{padding:2rem 0}.card-grid{grid-template-columns:1fr}.stat-row{grid-template-columns:1fr 1fr}.hero-meta{flex-direction:column;gap:.5rem}}
+</style>
 </head>
-<body class="bg-slate-50 dark:bg-[#0F1729] text-slate-800 dark:text-slate-200 font-sans antialiased transition-colors duration-200">
+<body>
 
-  <!-- ==================== STICKY NAV ==================== -->
-  <nav id="top" class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-[#0C1220]/80 border-b border-slate-200 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">rareliquid</span>
-        <span class="hidden sm:inline text-xs text-slate-400 dark:text-slate-500 font-medium ml-1">v1.1</span>
-      </div>
-      <div class="hidden md:flex items-center gap-2">
-        <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">75-90 B-roll</span>
-        <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800">55-70 images</span>
-        <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-800">1-3 custom</span>
-        <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800">0 gaps</span>
-      </div>
-      <div class="flex items-center gap-3">
-        <a href="#top" class="flex items-center gap-1.5 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" title="Home">
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z"/></svg>
-          <span class="hidden sm:inline">Home</span>
-        </a>
-        <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors" title="Toggle theme">
-          <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-          <svg class="w-5 h-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-        </button>
-      </div>
+<button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<button class="toggle" id="themeToggle" aria-label="Toggle theme">
+<svg class="is" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+<svg class="im" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <a href="#top" class="sidebar-logo"><span>rareliquid</span>B-Roll Production Guidelines</a>
+  <div class="toc-group">
+    <div class="toc-group-title">Start Here</div>
+    <a href="#required-viewing" class="toc-link"><span class="toc-num">01</span>Required Viewing</a>
+    <a href="#problem" class="toc-link"><span class="toc-num">02</span>The Problem We Solve</a>
+  </div>
+  <div class="toc-group">
+    <div class="toc-group-title">How Much You Need</div>
+    <a href="#targets" class="toc-link"><span class="toc-num">03</span>Per-Minute Targets</a>
+    <a href="#no-gap" class="toc-link"><span class="toc-num">04</span>No-Gap Rule</a>
+    <a href="#variety" class="toc-link"><span class="toc-num">05</span>Visual Variety Rule</a>
+    <a href="#reuse" class="toc-link"><span class="toc-num">06</span>Asset Reuse Policy</a>
+  </div>
+  <div class="toc-group">
+    <div class="toc-group-title">Asset Types</div>
+    <a href="#broll" class="toc-link"><span class="toc-num">07</span>B-Roll Video</a>
+    <a href="#stills" class="toc-link"><span class="toc-num">08</span>Still Images</a>
+    <a href="#broll-audio" class="toc-link"><span class="toc-num">09</span>B-Roll with Audio</a>
+    <a href="#custom" class="toc-link"><span class="toc-num">10</span>Custom Visuals</a>
+    <a href="#decision" class="toc-link"><span class="toc-num">11</span>Which Type to Use</a>
+  </div>
+  <div class="toc-group">
+    <div class="toc-group-title">Sourcing & Quality</div>
+    <a href="#source-priority" class="toc-link"><span class="toc-num">12</span>Source Priority</a>
+    <a href="#clip-rules" class="toc-link"><span class="toc-num">13</span>Clip Duration Rules</a>
+    <a href="#historical" class="toc-link"><span class="toc-num">14</span>Historical Accuracy</a>
+    <a href="#relevance" class="toc-link"><span class="toc-num">15</span>Relevance Standard</a>
+  </div>
+  <div class="toc-group">
+    <div class="toc-group-title">Annotation Format</div>
+    <a href="#format-broll" class="toc-link"><span class="toc-num">16</span>B-Roll Format</a>
+    <a href="#format-images" class="toc-link"><span class="toc-num">17</span>Image Format</a>
+    <a href="#format-audio" class="toc-link"><span class="toc-num">18</span>Audio & Overlays</a>
+  </div>
+  <div class="toc-group">
+    <div class="toc-group-title">Visual Techniques</div>
+    <a href="#hook" class="toc-link"><span class="toc-num">19</span>Hook Section</a>
+    <a href="#transitions" class="toc-link"><span class="toc-num">20</span>Section Transitions</a>
+    <a href="#metaphors" class="toc-link"><span class="toc-num">21</span>Metaphor Clips</a>
+    <a href="#highlights" class="toc-link"><span class="toc-num">22</span>Article Highlights</a>
+    <a href="#show-dont-tell" class="toc-link"><span class="toc-num">23</span>Show, Don't Tell</a>
+  </div>
+  <div class="toc-group">
+    <div class="toc-group-title">The Process</div>
+    <a href="#workflow" class="toc-link"><span class="toc-num">24</span>7-Step Workflow</a>
+    <a href="#search-queries" class="toc-link"><span class="toc-num">25</span>Search Queries</a>
+  </div>
+  <div class="toc-group">
+    <div class="toc-group-title">Reference</div>
+    <a href="#mistakes" class="toc-link"><span class="toc-num">&oplus;</span>Common Mistakes</a>
+    <a href="#checklist" class="toc-link"><span class="toc-num">&oplus;</span>Deliverables Checklist</a>
+    <a href="#quick-ref" class="toc-link"><span class="toc-num">&oplus;</span>Quick Reference Card</a>
+  </div>
+</aside>
+
+<div class="main">
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <h1>B-Roll, Still Images &amp; <em>Custom Visuals</em> Guidelines</h1>
+  <p class="hero-sub">The single source of truth for anyone preparing visuals for a rareliquid documentary. Follow these guidelines exactly to eliminate revision rounds.</p>
+  <div class="hero-meta"><span><strong>75-90</strong> B-roll clips</span><span><strong>55-70</strong> still images</span><span><strong>1-3</strong> custom visuals</span><span><strong>0</strong> gaps allowed</span></div>
+</section>
+
+<div class="content-wrap">
+
+<!-- ============ REQUIRED VIEWING ============ -->
+<section id="required-viewing">
+  <h2><span class="ch-label">01</span>Required Viewing</h2>
+  <p><strong>Before you do anything, watch both of these documentaries in full.</strong> These are the benchmarks for density, pacing, and visual style. Every decision you make should be measured against these videos.</p>
+
+  <table>
+    <thead><tr><th>Documentary</th><th>What to Study</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://youtu.be/bnLFyTIL5lQ" target="_blank">JP Morgan Documentary</a> (12:31)</td><td>Overall pacing, B-roll density, how custom visuals (timelines, data charts) are integrated, section transitions</td></tr>
+      <tr><td><a href="https://www.youtube.com/watch?v=SfIjrEJt3SQ" target="_blank">David Solomon Documentary</a> (18:22)</td><td>Image sourcing, highlight overlays on articles, metaphor clips (basketball rejection = Goldman rejection), era-appropriate visuals</td></tr>
+    </tbody>
+  </table>
+
+  <p>While watching, pay attention to how rarely the host is on screen without a visual cut. Count the seconds between cuts. Notice how every single sentence has something visual happening. That is the standard.</p>
+
+  <div class="callout critical">
+    <div class="callout-title">Non-Negotiable Rule</div>
+    <p>The host is on screen only ~13% of the time. ~87% of the video must be B-roll, still images, or custom visuals. Most host streaks are 2-5 seconds. Stretches of 10-15 seconds happen during key narrative moments. <strong>Hard ceiling: ~15 seconds</strong> &mdash; never exceed this without a visual cut.</p>
+  </div>
+</section>
+
+<!-- ============ THE PROBLEM ============ -->
+<section id="problem">
+  <h2><span class="ch-label">02</span>The Problem We Solve</h2>
+  <p>In past productions, the initial B-roll pass covered only about <strong>50-60% of what was needed</strong>. The remaining gaps had to be filled in a second round, which doubled the timeline. The most common issues were:</p>
+  <ul>
+    <li>Not enough total clips</li>
+    <li>Clips loosely related but not specific to the sentence being spoken</li>
+    <li>Generic stock footage used when real interview/news clips existed</li>
+    <li>Present-day footage used for historical events (e.g., showing 2024 Solomon during a 1986 Drexel section)</li>
+    <li>Boring or plain clips chosen when more visually interesting alternatives existed</li>
+  </ul>
+  <p>The editor's perspective: <em>"I need a massive pile of accurate, relevant B-roll and images to cut with. Give me too much and I'll pick the best. Give me too little and the whole timeline stalls."</em></p>
+</section>
+
+<!-- ============ PER-MINUTE TARGETS ============ -->
+<section id="targets">
+  <h2><span class="ch-label">03</span>Per-Minute Targets</h2>
+  <p>These targets come directly from analyzing actual DaVinci Resolve timeline exports from our published documentaries. They are not estimates &mdash; they are verified counts.</p>
+
+  <div class="stat-row">
+    <div class="stat-box"><div class="num">75-90</div><div class="lbl">Unique B-Roll Sources</div></div>
+    <div class="stat-box"><div class="num">55-70</div><div class="lbl">Unique Still Images</div></div>
+    <div class="stat-box"><div class="num">1-3</div><div class="lbl">Custom Visual HTML Files</div></div>
+    <div class="stat-box"><div class="num">~148</div><div class="lbl">Total Assets (15-min video)</div></div>
+  </div>
+
+  <table>
+    <thead><tr><th>Asset Type</th><th>Per Minute of Script</th><th>Ground Truth Totals (15-min video)</th></tr></thead>
+    <tbody>
+      <tr><td>Unique B-Roll Sources</td><td>5-7 unique sources per minute</td><td>74-91 unique sources (~83 avg), across 96-109 clip placements</td></tr>
+      <tr><td>Unique Still Images</td><td>4-5 unique images per minute</td><td>57-68 unique images (~63 avg), across 67-96 placements</td></tr>
+      <tr><td>Custom Visuals (HTML)</td><td>0.1-0.2 per minute</td><td>1-3 HTML files total (NOT 7-10). Timelines, charts, data overlays.</td></tr>
+      <tr><td>Stock Footage</td><td>&mdash;</td><td>Under 10% of total B-roll. Last resort only.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout info">
+    <div class="callout-title">Real Data</div>
+    <p>The JPM doc used <strong>91 B-roll sources</strong> and <strong>57 images</strong>. The Solomon doc used <strong>74 B-roll sources</strong> and <strong>68 images</strong>. If you finish under these counts, go back and find more.</p>
+  </div>
+
+  <h3>Ground Truth: JPM Documentary (12:31)</h3>
+  <table>
+    <thead><tr><th>Asset</th><th>Unique Sources</th><th>Placements</th><th>Avg Duration</th></tr></thead>
+    <tbody>
+      <tr><td>B-Roll Video</td><td>91</td><td>109</td><td>5.5s</td></tr>
+      <tr><td>Still Images</td><td>57</td><td>67</td><td>3.5s</td></tr>
+      <tr><td>Custom Visuals</td><td>1</td><td>1</td><td>8.0s</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Ground Truth: Solomon Documentary (18:22)</h3>
+  <table>
+    <thead><tr><th>Asset</th><th>Unique Sources</th><th>Placements</th><th>Avg Duration</th></tr></thead>
+    <tbody>
+      <tr><td>B-Roll Video</td><td>74</td><td>96</td><td>6.4s</td></tr>
+      <tr><td>Still Images</td><td>68</td><td>96</td><td>4.7s</td></tr>
+      <tr><td>Custom Visuals</td><td>3</td><td>26</td><td>9.4s</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ NO-GAP RULE ============ -->
+<section id="no-gap">
+  <h2><span class="ch-label">04</span>The No-Gap Rule</h2>
+  <p><strong>Every single line of the script must have at least one visual option tagged to it.</strong> If a line discusses a person, there should be footage or an image of that person. If a line discusses a company, there should be a logo, office footage, or news clip. If a line discusses a concept, there should be a relevant chart, document, or illustrative visual.</p>
+  <p>There should be <strong>zero orphan lines</strong> with no visual attached. If you cannot find anything, flag it explicitly rather than leaving it blank:</p>
+  <div class="format-block">[NO B-ROLL FOUND - need alternative]</div>
+</section>
+
+<!-- ============ VISUAL VARIETY ============ -->
+<section id="variety">
+  <h2><span class="ch-label">05</span>Visual Variety Rule</h2>
+  <p><strong>Never have 3 or more consecutive still images without a video clip in between.</strong> If you find yourself stacking images back-to-back, search harder for a video source to break up the sequence. The visual rhythm should alternate between video clips, still images, and the host.</p>
+  <p>Approximately <strong>16 visual changes happen per minute</strong> in our documentaries. That means a new cut roughly every 3-4 seconds.</p>
+</section>
+
+<!-- ============ ASSET REUSE ============ -->
+<section id="reuse">
+  <h2><span class="ch-label">06</span>Asset Reuse Policy</h2>
+  <p>Some reuse is normal. In the Solomon documentary:</p>
+  <ul>
+    <li>23 still image sources are reused across 96 placements</li>
+    <li>11 B-roll sources are reused across 96 placements</li>
+    <li>A photo of the subject appears multiple times when discussing different career phases</li>
+  </ul>
+  <p><strong>The key rule:</strong> always prioritize UNIQUE sources to hit the minimums (75-90 B-roll, 55-70 images) first. Reuse is acceptable only after you have exhausted unique options. Do not start with a plan to reuse heavily.</p>
+</section>
+
+<!-- ============ B-ROLL VIDEO ============ -->
+<section id="broll">
+  <h2><span class="ch-label">07</span>B-Roll Video</h2>
+  <p>Video footage that plays over the host's voiceover. The viewer sees the footage but hears Ben narrating. This is the <strong>primary visual type</strong>, making up ~59% of screen time.</p>
+
+  <h3>When to Use B-Roll</h3>
+  <ul>
+    <li>Showing a person in action or speaking (interview footage, news coverage, conference keynotes)</li>
+    <li>Demonstrating a location, building, or environment</li>
+    <li>Illustrating a concept, process, or activity</li>
+    <li>Filling gaps between still images to maintain visual variety and pacing</li>
+    <li>The original audio from the clip is not relevant to the narrative (most use cases)</li>
+  </ul>
+
+  <h3>Rules</h3>
+  <ul>
+    <li><strong>3-10 seconds per clip</strong> (ideal: 4-7 seconds). No isolated clips under 3 seconds.</li>
+    <li>Must match the era discussed in the script &mdash; no 2024 footage for 1986 events</li>
+    <li>Must pass the relevance test: if watched on mute, could you guess the topic?</li>
+    <li>Always pick the more interesting clip when two exist</li>
+    <li>Never reuse the same clip for two different script lines (unless revisiting a topic)</li>
+    <li>Stock footage is a <strong>last resort</strong> (under 10% of total)</li>
+  </ul>
+
+  <h3>How to Annotate</h3>
+  <div class="format-block"><span class="label">Format</span>[https://www.youtube.com/watch?v=QZ85VPgCOCM, 0:18 - 0:29]</div>
+
+  <div class="callout info">
+    <div class="callout-title">Visual Distinction</div>
+    <p>When an editor sees B-roll with no "WITH AUDIO" marker, they assume the host voiceover plays over it. The video footage is background; the audio is foreground.</p>
+  </div>
+</section>
+
+<!-- ============ STILL IMAGES ============ -->
+<section id="stills">
+  <h2><span class="ch-label">08</span>Still Images</h2>
+  <p>A static image displayed on screen, shown for 2-6 seconds. The editor applies zoom/pan (Ken Burns effect) to <strong>91-93% of them</strong> &mdash; that's the default. Still images make up ~22% of screen time.</p>
+
+  <h3>Image Types (In Order of Preference)</h3>
+  <ol>
+    <li><strong>News article screenshots with key phrases highlighted</strong> &mdash; the signature rareliquid look. Always find the original article, not a tweet about it.</li>
+    <li><strong>Official documents and filings</strong> &mdash; SEC filings, court docs, press releases, earnings reports. Crop to the relevant section.</li>
+    <li><strong>Data charts and graphs</strong> &mdash; from reputable sources (Bloomberg, WSJ, company filings). Must be legible at 1080p.</li>
+    <li><strong>High-resolution photographs</strong> &mdash; professional headshots, event photos, campus/building shots. For historical subjects, search "[name] young" for age-appropriate photos.</li>
+    <li><strong>Social media screenshots</strong> &mdash; only when directly relevant and from notable accounts.</li>
+  </ol>
+
+  <h3>Quality Requirements</h3>
+  <ul>
+    <li>Minimum resolution: <strong>1280x720</strong> (ideally 1920x1080 or higher)</li>
+    <li>No watermarks, no compression artifacts</li>
+    <li>Crop to relevant content &mdash; no browser chrome, tabs, or bookmarks</li>
+    <li>If a highlight is needed, note it: <code>[pic 7, highlight "specific phrase"]</code></li>
+  </ul>
+
+  <h3>Naming Convention</h3>
+  <p>Name every image sequentially: <strong>1.png, 2.png, 3.png</strong>. Upload the entire folder to Slack as a batch.</p>
+
+  <h3>How to Annotate</h3>
+  <div class="format-block"><span class="label">Formats</span>[pic 1]
+[pic 7, highlight "specific text to underline"]
+[pic 12, zoom]
+[pic 15, pan left-to-right]
+[pic 8, zoom and highlight "key phrase"]</div>
+</section>
+
+<!-- ============ B-ROLL WITH AUDIO ============ -->
+<section id="broll-audio">
+  <h2><span class="ch-label">09</span>B-Roll with Audio</h2>
+  <p>Same as B-roll, but the <strong>original audio plays</strong> instead of Ben's voiceover. Very rare: ~2% of total video, only 3-5 uses per 15-minute video.</p>
+
+  <h3>When to Use (Sparingly)</h3>
+  <ul>
+    <li>A CEO or public figure makes a critical statement that is more powerful heard in their own voice</li>
+    <li>A news anchor is breaking a major story and their delivery adds drama and credibility</li>
+    <li>An interview subject makes a quote that deserves to be heard directly, not summarized</li>
+    <li>A moment of genuine emotion or emphasis that loses impact if paraphrased</li>
+  </ul>
+
+  <div class="callout warn">
+    <div class="callout-title">Warning</div>
+    <p>Overusing "WITH AUDIO" dilutes its impact. If every other clip has original audio, none of them feel special. Reserve this for moments that give the viewer chills. Default to standard B-roll with voiceover.</p>
+  </div>
+
+  <h3>How to Annotate</h3>
+  <div class="format-block"><span class="label">Format</span>[https://www.youtube.com/watch?v=xyz, 4:05 - 4:09, WITH AUDIO]</div>
+</section>
+
+<!-- ============ CUSTOM VISUALS ============ -->
+<section id="custom">
+  <h2><span class="ch-label">10</span>Custom Visuals (HTML)</h2>
+  <p>Custom-built HTML files rendered as graphics. Only <strong>1-3 per entire video</strong>. Do not overuse.</p>
+
+  <h3>When to Flag for a Custom Visual</h3>
+  <ul>
+    <li>Career timelines (e.g., Irving Trust &rarr; Drexel &rarr; Bear Stearns &rarr; Goldman)</li>
+    <li>Financial data: revenue, profit margins, stock price comparisons</li>
+    <li>Comparison tables: two candidates side by side, company metrics vs. peers</li>
+    <li>Company splits, mergers, organizational changes</li>
+    <li>Key statistics or quotes that deserve visual emphasis</li>
+  </ul>
+
+  <h3>How to Annotate</h3>
+  <div class="format-block"><span class="label">Format</span>[custom visual: Solomon career timeline Irving &rarr; Drexel &rarr; Bear &rarr; Goldman]
+[custom visual: Goldman stock vs JPM vs MS since 2018]</div>
+
+  <h3>Quality Checklist</h3>
+  <ul>
+    <li>All text legible at 1080p</li>
+    <li>Data sourced and cited</li>
+    <li>Self-contained HTML file (no external dependencies)</li>
+    <li>16:9 aspect ratio</li>
+  </ul>
+</section>
+
+<!-- ============ DECISION TREE ============ -->
+<section id="decision">
+  <h2><span class="ch-label">11</span>Which Type Should I Use?</h2>
+  <p><strong>Still images show information. B-Roll shows people and action. B-Roll with Audio lets the original speaker be heard.</strong> When in doubt, default to Still Image + standard B-Roll.</p>
+
+  <table>
+    <thead><tr><th>Script Line Type</th><th>Still Image?</th><th>B-Roll?</th><th>B-Roll + Audio?</th></tr></thead>
+    <tbody>
+      <tr><td>"[Name] was born in [City]."</td><td>Yes (photo of person or city)</td><td>Maybe (only if strong interview exists)</td><td>No</td></tr>
+      <tr><td>"[CEO] said '[quote]' in a 2024 call."</td><td>Maybe (article about the quote)</td><td>Yes (conference footage)</td><td>Yes, if the quote is key to the narrative</td></tr>
+      <tr><td>"[Company] was founded in 1987."</td><td>Yes (archival photo, founding docs)</td><td>No (no 1987 video likely exists)</td><td>No</td></tr>
+      <tr><td>"[Subject] was rejected by [Company]."</td><td>No</td><td>Yes (interview or creative metaphor clip)</td><td>No</td></tr>
+      <tr><td>"The market crashed 20% that day."</td><td>Yes (chart, market data screenshot)</td><td>Maybe (traders reacting)</td><td>Maybe (news anchor reporting, WITH AUDIO)</td></tr>
+      <tr><td>"[Person] and [Person] met for the first time."</td><td>No</td><td>Yes (news coverage of the meeting)</td><td>Yes, if video of them together exists</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ SOURCE PRIORITY ============ -->
+<section id="source-priority">
+  <h2><span class="ch-label">12</span>Source Priority</h2>
+  <p>When looking for B-roll, search in this exact order. Only move to the next tier if the previous one has nothing usable.</p>
+
+  <table>
+    <thead><tr><th>Priority</th><th>Source Type</th><th>Examples</th><th>Quality</th></tr></thead>
+    <tbody>
+      <tr><td><strong style="color:var(--a3)">1 (Best)</strong></td><td>TV interviews &amp; news coverage</td><td>Bloomberg, CNBC, Fox Business interviews; news segments</td><td>Highest impact</td></tr>
+      <tr><td><strong>2</strong></td><td>Official company footage</td><td>Earnings calls, investor days, conference keynotes</td><td>Strong credibility</td></tr>
+      <tr><td><strong>3</strong></td><td>Documentaries / biographical clips</td><td>Existing docs, biography channels</td><td>Good depth</td></tr>
+      <tr><td><strong>4</strong></td><td>General financial news footage</td><td>Market floor, trading screens, office environments</td><td>Filler only</td></tr>
+      <tr><td><strong style="color:var(--a5)">5 (Last)</strong></td><td>Stock footage</td><td>Generic office shots, city skylines</td><td>Under 10% max</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout critical">
+    <div class="callout-title">Critical</div>
+    <p>Stock footage (Priority 5) should make up no more than 10% of your total B-roll. If you find yourself relying on it heavily, you need to search harder for Tier 1-3 sources. Always pick the more visually engaging option.</p>
+  </div>
+</section>
+
+<!-- ============ CLIP DURATION ============ -->
+<section id="clip-rules">
+  <h2><span class="ch-label">13</span>Clip Duration Rules</h2>
+  <table>
+    <thead><tr><th>Rule</th><th>Requirement</th></tr></thead>
+    <tbody>
+      <tr><td>Minimum usable duration</td><td><strong>3 seconds.</strong> No isolated clips under 3 seconds.</td></tr>
+      <tr><td>Maximum single clip</td><td><strong>10 seconds</strong> before a cut is needed</td></tr>
+      <tr><td>Ideal clip length</td><td><strong>4-7 seconds</strong></td></tr>
+      <tr><td>Transition clips</td><td>2-3 seconds (only for cuts between sections)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ HISTORICAL ACCURACY ============ -->
+<section id="historical">
+  <h2><span class="ch-label">14</span>Historical Accuracy</h2>
+  <p><strong>This is where past deliveries failed the most.</strong> If the script is talking about something that happened in 1990, you cannot use footage of that person from 2024.</p>
+  <ul>
+    <li>If the script discusses events from a specific era, the B-roll must be <strong>from that era or visually neutral</strong></li>
+    <li>When a person is discussed at a young age, search for "[person name] young" or "[person name] early career"</li>
+    <li>If no era-appropriate footage exists, use a still image (news clipping, document, yearbook photo) rather than modern footage</li>
+    <li>For historical companies (Drexel Burnham Lambert, Bear Stearns), look for <strong>archival news coverage</strong>, not modern retrospectives</li>
+  </ul>
+
+  <div class="callout warn">
+    <div class="callout-title">Real Example</div>
+    <p>In the Solomon documentary, a clip at timestamp 4:20 had to be removed because it showed Solomon in the present day during a section about his time at Drexel in the 1980s. A clip of modern computers was also replaced because it showed modern technology during a 1980s section.</p>
+  </div>
+</section>
+
+<!-- ============ RELEVANCE ============ -->
+<section id="relevance">
+  <h2><span class="ch-label">15</span>Relevance Standard &amp; the Better Option Rule</h2>
+  <p>Every clip must pass this test: <strong>if someone watched the clip on mute without context, could they reasonably guess what the narrator is talking about?</strong> If no, the clip is not relevant enough.</p>
+
+  <div class="card-grid">
+    <div class="card" style="border-left:4px solid var(--a5)">
+      <h4 style="color:var(--a5)">Bad</h4>
+      <p>Script says "Solomon joins Drexel Burnham Lambert" and B-roll shows a <em>generic modern trading floor</em>.</p>
     </div>
-  </nav>
-
-  <!-- ==================== SECTION 1: THE NUMBERS ==================== -->
-  <section id="numbers" class="py-16 sm:py-20 lg:py-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12">
-        <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-3">The Numbers</h1>
-        <p class="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Real targets from our published documentaries. Not estimates.</p>
-      </div>
-
-      <!-- 4 Stat Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10">
-        <!-- Card 1: B-Roll -->
-        <div class="stat-card rounded-xl p-6 sm:p-8 bg-white dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 card-glow">
-          <div class="text-5xl sm:text-6xl font-black text-emerald-600 dark:text-emerald-400 font-mono tracking-tighter mb-2">75-90</div>
-          <div class="text-base font-bold text-slate-900 dark:text-white mb-1">Unique B-Roll Video Clips</div>
-          <div class="text-sm text-slate-500 dark:text-slate-400">YouTube interviews, news coverage, documentaries</div>
-        </div>
-        <!-- Card 2: Still Images -->
-        <div class="stat-card rounded-xl p-6 sm:p-8 bg-white dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 card-glow">
-          <div class="text-5xl sm:text-6xl font-black text-blue-600 dark:text-blue-400 font-mono tracking-tighter mb-2">55-70</div>
-          <div class="text-base font-bold text-slate-900 dark:text-white mb-1">Unique Still Images</div>
-          <div class="text-sm text-slate-500 dark:text-slate-400">Article screenshots, photos, documents, charts</div>
-        </div>
-        <!-- Card 3: Custom Visuals -->
-        <div class="stat-card rounded-xl p-6 sm:p-8 bg-white dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 card-glow">
-          <div class="text-5xl sm:text-6xl font-black text-purple-600 dark:text-purple-400 font-mono tracking-tighter mb-2">1-3</div>
-          <div class="text-base font-bold text-slate-900 dark:text-white mb-1">Custom Visual HTML Files</div>
-          <div class="text-sm text-slate-500 dark:text-slate-400">Timelines, data charts &mdash; very rare</div>
-        </div>
-        <!-- Card 4: Total (accent) -->
-        <div class="stat-card rounded-xl p-6 sm:p-8 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-[#2A1F0A] dark:to-[#1B2A4A] border-2 border-amber-300 dark:border-amber-600/60 ring-1 ring-amber-200/50 dark:ring-amber-700/30">
-          <div class="text-5xl sm:text-6xl font-black text-amber-600 dark:text-amber-400 font-mono tracking-tighter mb-2">~148</div>
-          <div class="text-base font-bold text-slate-900 dark:text-white mb-1">Total Unique Visual Assets</div>
-          <div class="text-sm text-amber-700 dark:text-amber-400/80">For a 15-minute video</div>
-        </div>
-      </div>
-
-      <!-- Callout Box -->
-      <div class="rounded-xl p-6 bg-slate-100 dark:bg-[#1B2A4A] border-l-4 border-blue-500 mb-8">
-        <p class="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-          <span class="font-semibold text-slate-900 dark:text-white">"These are real numbers from our published videos.</span>
-          The JPM doc used 91 B-roll sources and 57 images. The Solomon doc used 74 B-roll sources and 68 images. Hit these targets or go back and find more."
-        </p>
-      </div>
-
-      <!-- 3 Rule Badges -->
-      <div class="flex flex-wrap gap-3 mb-14 justify-center">
-        <span class="px-4 py-2 rounded-lg text-sm font-semibold bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60">Stock footage: under 10% of total B-roll</span>
-        <span class="px-4 py-2 rounded-lg text-sm font-semibold bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800/60 badge-pulse">Gaps allowed: zero &mdash; every script line needs a visual</span>
-        <span class="px-4 py-2 rounded-lg text-sm font-semibold bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800/60">Reuse OK after hitting unique minimums</span>
-      </div>
-
-      <!-- Reference Videos -->
-      <div class="mb-6">
-        <h2 class="text-2xl font-bold text-slate-900 dark:text-white text-center mb-6">Reference Videos</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <div class="aspect-video rounded-xl overflow-hidden bg-slate-900 border border-slate-200 dark:border-slate-700">
-              <iframe class="w-full h-full" src="https://www.youtube.com/embed/hQSpro7pNws" frameborder="0" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="text-center text-sm font-semibold text-slate-600 dark:text-slate-400 mt-3">Why J.P. Morgan Always Wins (12:31)</p>
-          </div>
-          <div>
-            <div class="aspect-video rounded-xl overflow-hidden bg-slate-900 border border-slate-200 dark:border-slate-700">
-              <iframe class="w-full h-full" src="https://www.youtube.com/embed/SfIjrEJt3SQ" frameborder="0" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="text-center text-sm font-semibold text-slate-600 dark:text-slate-400 mt-3">The Bully Running Goldman Sachs (18:22)</p>
-          </div>
-        </div>
-        <p class="text-center text-base font-bold text-slate-900 dark:text-white mt-6">Watch both of these in full before starting any script. These are the benchmark.</p>
-      </div>
+    <div class="card" style="border-left:4px solid var(--a3)">
+      <h4 style="color:var(--a3)">Good</h4>
+      <p>Script says "Solomon joins Drexel Burnham Lambert" and B-roll shows a <em>1980s news clip about Drexel</em>, or an archival photo of Drexel's office, or footage of Michael Milken.</p>
     </div>
-  </section>
+  </div>
 
-  <!-- ==================== SECTION 2: WHAT COUNTS AS WHAT ==================== -->
-  <section id="types" class="py-16 sm:py-20 bg-white dark:bg-[#0C1220] border-y border-slate-200 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white text-center mb-12">What Counts as What</h2>
+  <p><strong>The "Better Option" Rule:</strong> If you find two clips for the same moment, always use the more visually interesting one. If a still image is more relevant and interesting than a generic video clip, use the image.</p>
+</section>
 
-      <!-- 2 Large Cards -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <!-- B-Roll Video -->
-        <div class="rounded-xl bg-slate-50 dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 border-l-4 border-l-emerald-500 overflow-hidden">
-          <div class="p-6 sm:p-8">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">B-Roll Video</h3>
-            <div class="space-y-4 text-sm">
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">What It Is</div>
-                <p class="text-slate-700 dark:text-slate-300">Video footage that plays over the host's voiceover. The viewer sees the footage but hears Ben narrating.</p>
-              </div>
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">Best Sources</div>
-                <p class="text-slate-700 dark:text-slate-300">Bloomberg, CNBC, Fox Business interviews. News coverage. Company event footage. Conference keynotes. Existing documentaries.</p>
-              </div>
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">Rules</div>
-                <ul class="text-slate-700 dark:text-slate-300 space-y-1">
-                  <li>3-10 seconds per clip (ideal: 4-7 seconds)</li>
-                  <li>Must match the era discussed in the script &mdash; no 2024 footage for 1986 events</li>
-                  <li>Always pick the more interesting clip when you have two options</li>
-                  <li>Stock footage is a last resort (under 10% of total)</li>
-                </ul>
-              </div>
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">How to Annotate</div>
-                <code class="block px-3 py-2 rounded-lg bg-slate-200/60 dark:bg-[#0F1729] text-emerald-700 dark:text-emerald-400 font-mono text-xs break-all">[https://www.youtube.com/watch?v=QZ85VPgCOCM, 0:18 - 0:29]</code>
-              </div>
-            </div>
-          </div>
-        </div>
+<!-- ============ B-ROLL FORMAT ============ -->
+<section id="format-broll">
+  <h2><span class="ch-label">16</span>B-Roll Annotation Format</h2>
+  <p>Every B-roll reference must follow this exact format. No exceptions.</p>
 
-        <!-- Still Image -->
-        <div class="rounded-xl bg-slate-50 dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 border-l-4 border-l-blue-500 overflow-hidden">
-          <div class="p-6 sm:p-8">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Still Image</h3>
-            <div class="space-y-4 text-sm">
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">What It Is</div>
-                <p class="text-slate-700 dark:text-slate-300">A static image displayed on screen. The editor applies zoom/pan (Ken Burns effect) to 91-93% of them &mdash; that's the default, you don't need to worry about it.</p>
-              </div>
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">Best Types (In Order)</div>
-                <ol class="text-slate-700 dark:text-slate-300 space-y-1 list-decimal list-inside">
-                  <li>News article screenshots with key phrases visible</li>
-                  <li>Official documents, SEC filings, court docs</li>
-                  <li>Data charts from Bloomberg, WSJ, company filings</li>
-                  <li>High-res photographs (headshots, events, buildings)</li>
-                  <li>Social media screenshots (only when directly relevant)</li>
-                </ol>
-              </div>
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">Rules</div>
-                <ul class="text-slate-700 dark:text-slate-300 space-y-1">
-                  <li>Minimum 1280x720 resolution</li>
-                  <li>No watermarks. Crop to relevant content only.</li>
-                  <li>Name files sequentially: 1.png, 2.png, 3.png</li>
-                  <li>Upload entire folder to Slack as a batch</li>
-                  <li>If a phrase needs highlighting, note it in the annotation</li>
-                </ul>
-              </div>
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">How to Annotate</div>
-                <div class="space-y-1">
-                  <code class="block px-3 py-1.5 rounded-lg bg-slate-200/60 dark:bg-[#0F1729] text-blue-700 dark:text-blue-400 font-mono text-xs">[pic 1]</code>
-                  <code class="block px-3 py-1.5 rounded-lg bg-slate-200/60 dark:bg-[#0F1729] text-blue-700 dark:text-blue-400 font-mono text-xs">[pic 7, highlight "specific text to underline"]</code>
-                  <code class="block px-3 py-1.5 rounded-lg bg-slate-200/60 dark:bg-[#0F1729] text-blue-700 dark:text-blue-400 font-mono text-xs">[pic 12, zoom]</code>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="format-block"><span class="label">Correct</span>[https://www.youtube.com/watch?v=QZ85VPgCOCM, 0:18 - 0:29]
+[https://www.youtube.com/watch?v=nbs_s6_L_ao, 22:10 - 22:14]</div>
 
-      <!-- 2 Smaller Cards -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- B-Roll with Audio -->
-        <div class="rounded-xl bg-slate-50 dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 border-l-4 border-l-amber-500 overflow-hidden">
-          <div class="p-6">
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">B-Roll with Audio</h3>
-            <div class="space-y-3 text-sm">
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">What It Is</div>
-                <p class="text-slate-700 dark:text-slate-300">Same as B-roll, but the <strong>original audio</strong> plays instead of Ben's voiceover.</p>
-              </div>
-              <div class="flex gap-4">
-                <div>
-                  <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">How Rare</div>
-                  <p class="text-slate-700 dark:text-slate-300">~2% of total video. Only 3-5 uses per 15-minute video.</p>
-                </div>
-              </div>
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">When to Use</div>
-                <p class="text-slate-700 dark:text-slate-300">Only for high-impact moments: a CEO making a key statement, a news anchor breaking a story, a dramatic quote on camera.</p>
-              </div>
-              <div class="px-3 py-2 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/40 text-amber-800 dark:text-amber-300 text-xs">
-                Using this everywhere dilutes its power. Save it for moments that give the viewer chills.
-              </div>
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">How to Annotate</div>
-                <code class="block px-3 py-1.5 rounded-lg bg-slate-200/60 dark:bg-[#0F1729] text-amber-700 dark:text-amber-400 font-mono text-xs break-all">[https://www.youtube.com/watch?v=xyz, 4:05 - 4:09, WITH AUDIO]</code>
-              </div>
-            </div>
-          </div>
-        </div>
+  <div class="format-block bad"><span class="label">Wrong &mdash; Do Not Do These</span>[Goldman Sachs CEO Interview, 0:18 - 0:29]     &larr; No titles, raw URLs only
+[https://youtube.com/watch?v=abc, around 3 min] &larr; No vague timestamps
+[https://youtube.com/watch?v=abc]                &larr; Never omit timestamps</div>
 
-        <!-- Custom Visual -->
-        <div class="rounded-xl bg-slate-50 dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 border-l-4 border-l-purple-500 overflow-hidden">
-          <div class="p-6">
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Custom Visual</h3>
-            <div class="space-y-3 text-sm">
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">What It Is</div>
-                <p class="text-slate-700 dark:text-slate-300">An HTML-generated graphic: career timeline, data chart, comparison table, financial breakdown. Created with Claude/LLM.</p>
-              </div>
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">How Rare</div>
-                <p class="text-slate-700 dark:text-slate-300">Only 1-3 per entire video. Do not overuse.</p>
-              </div>
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">When to Flag</div>
-                <p class="text-slate-700 dark:text-slate-300">Career paths, stock performance comparisons, company merger diagrams, revenue/profit breakdowns &mdash; anything where a clean graphic beats a screenshot.</p>
-              </div>
-              <div>
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">How to Annotate</div>
-                <div class="space-y-1">
-                  <code class="block px-3 py-1.5 rounded-lg bg-slate-200/60 dark:bg-[#0F1729] text-purple-700 dark:text-purple-400 font-mono text-xs break-all">[custom visual: Solomon career timeline Irving &rarr; Drexel &rarr; Bear &rarr; Goldman]</code>
-                  <code class="block px-3 py-1.5 rounded-lg bg-slate-200/60 dark:bg-[#0F1729] text-purple-700 dark:text-purple-400 font-mono text-xs break-all">[custom visual: Goldman stock vs JPM vs MS since 2018]</code>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <h3>Alternate Options (Let Editor Choose)</h3>
+  <div class="format-block">[https://youtube.com/watch?v=abc, 4:05 - 4:09] OR [https://youtube.com/watch?v=xyz, 16:10 - 16:42]</div>
+</section>
 
-  <!-- ==================== SECTION 3: ANNOTATION CHEAT SHEET ==================== -->
-  <section id="formats" class="py-16 sm:py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white text-center mb-12">Annotation Cheat Sheet</h2>
+<!-- ============ IMAGE FORMAT ============ -->
+<section id="format-images">
+  <h2><span class="ch-label">17</span>Image Annotation Format</h2>
+  <div class="format-block"><span class="label">All Formats</span>[pic 1]                                    &mdash; basic placement
+[pic 7, highlight "specific text to underline"]  &mdash; emphasize a phrase
+[pic 12, zoom]                                   &mdash; gradual zoom
+[pic 15, pan left-to-right]                      &mdash; horizontal pan
+[pic 9, zoom in on face]                         &mdash; zoom to specific detail
+[pic 8, zoom and highlight "key phrase"]         &mdash; zoom + text emphasis</div>
+</section>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Correct Formats -->
-        <div class="rounded-xl bg-white dark:bg-[#1B2A4A] border-2 border-emerald-300 dark:border-emerald-700/60 overflow-hidden">
-          <div class="px-6 py-3 bg-emerald-50 dark:bg-emerald-900/20 border-b border-emerald-200 dark:border-emerald-800/40 flex items-center justify-between">
-            <span class="text-sm font-bold text-emerald-700 dark:text-emerald-400">Correct Formats</span>
-          </div>
-          <div class="p-6 space-y-4 font-mono text-xs">
-            <div>
-              <div class="text-xs font-sans font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">B-Roll</div>
-              <div class="code-wrap">
-                <code class="block px-3 py-2 rounded-lg bg-slate-50 dark:bg-[#0F1729] text-emerald-700 dark:text-emerald-400 break-all select-all cursor-pointer" title="Click to select">[https://www.youtube.com/watch?v=QZ85VPgCOCM, 0:18 - 0:29]</code>
-              </div>
-            </div>
-            <div>
-              <div class="text-xs font-sans font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">B-Roll with Audio</div>
-              <div class="code-wrap">
-                <code class="block px-3 py-2 rounded-lg bg-slate-50 dark:bg-[#0F1729] text-emerald-700 dark:text-emerald-400 break-all select-all cursor-pointer" title="Click to select">[https://www.youtube.com/watch?v=xyz, 4:05 - 4:09, WITH AUDIO]</code>
-              </div>
-            </div>
-            <div>
-              <div class="text-xs font-sans font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Still Image</div>
-              <div class="space-y-1">
-                <code class="block px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-[#0F1729] text-emerald-700 dark:text-emerald-400 select-all cursor-pointer" title="Click to select">[pic 1]</code>
-                <code class="block px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-[#0F1729] text-emerald-700 dark:text-emerald-400 select-all cursor-pointer" title="Click to select">[pic 7, highlight "specific text"]</code>
-                <code class="block px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-[#0F1729] text-emerald-700 dark:text-emerald-400 select-all cursor-pointer" title="Click to select">[pic 12, zoom]</code>
-                <code class="block px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-[#0F1729] text-emerald-700 dark:text-emerald-400 select-all cursor-pointer" title="Click to select">[pic 15, pan left-to-right]</code>
-              </div>
-            </div>
-            <div>
-              <div class="text-xs font-sans font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Overlay</div>
-              <div class="space-y-1">
-                <code class="block px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-[#0F1729] text-emerald-700 dark:text-emerald-400 break-all select-all cursor-pointer" title="Click to select">[show Goldman Sachs logo when host says "Goldman"]</code>
-                <code class="block px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-[#0F1729] text-emerald-700 dark:text-emerald-400 break-all select-all cursor-pointer" title="Click to select">[arrow pointing to player A labeled "Solomon", player B labeled "Goldman Sachs"]</code>
-              </div>
-            </div>
-            <div>
-              <div class="text-xs font-sans font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Alternate Options (Let Editor Choose)</div>
-              <code class="block px-3 py-2 rounded-lg bg-slate-50 dark:bg-[#0F1729] text-emerald-700 dark:text-emerald-400 break-all select-all cursor-pointer" title="Click to select">[https://youtube.com/watch?v=abc, 4:05 - 4:09] OR [https://youtube.com/watch?v=xyz, 16:10 - 16:42]</code>
-            </div>
-            <div>
-              <div class="text-xs font-sans font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Can't Find Anything</div>
-              <code class="block px-3 py-2 rounded-lg bg-slate-50 dark:bg-[#0F1729] text-emerald-700 dark:text-emerald-400 select-all cursor-pointer" title="Click to select">[NO B-ROLL FOUND - need alternative]</code>
-            </div>
-          </div>
-        </div>
+<!-- ============ AUDIO & OVERLAYS ============ -->
+<section id="format-audio">
+  <h2><span class="ch-label">18</span>Audio &amp; Overlay Formats</h2>
 
-        <!-- Wrong Formats -->
-        <div class="rounded-xl bg-white dark:bg-[#1B2A4A] border-2 border-red-300 dark:border-red-700/60 overflow-hidden">
-          <div class="px-6 py-3 bg-red-50 dark:bg-red-900/20 border-b border-red-200 dark:border-red-800/40">
-            <span class="text-sm font-bold text-red-700 dark:text-red-400">Wrong Formats</span>
-          </div>
-          <div class="p-6 space-y-6">
-            <div>
-              <code class="block px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 font-mono text-xs line-through break-all">[Goldman Sachs CEO Interview, 0:18 - 0:29]</code>
-              <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 pl-3 border-l-2 border-red-300 dark:border-red-800">Use raw URLs, not video titles</p>
-            </div>
-            <div>
-              <code class="block px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 font-mono text-xs line-through break-all">[https://youtube.com/watch?v=abc, around the 3 minute mark]</code>
-              <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 pl-3 border-l-2 border-red-300 dark:border-red-800">Exact timestamps only, no vague references</p>
-            </div>
-            <div>
-              <code class="block px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 font-mono text-xs line-through break-all">[https://youtube.com/watch?v=abc]</code>
-              <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 pl-3 border-l-2 border-red-300 dark:border-red-800">Never omit start and end timestamps</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <h3>B-Roll with Audio</h3>
+  <div class="format-block">[https://www.youtube.com/watch?v=xyz, 4:05 - 4:09, WITH AUDIO]</div>
 
-  <!-- ==================== SECTION 4: DON'T DO THIS ==================== -->
-  <section id="mistakes" class="py-16 sm:py-20 bg-white dark:bg-[#0C1220] border-y border-slate-200 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white text-center mb-12">Don't Do This</h2>
+  <h3>Overlays</h3>
+  <div class="format-block">[show Goldman Sachs logo when host says "Goldman"]
+[arrow pointing to player A labeled "Solomon", player B labeled "Goldman Sachs"]
+[on-screen text: "95 hours per week" when host says the statistic]</div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        <!-- Mistake 1 -->
-        <div class="rounded-xl bg-slate-50 dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 border-l-4 border-l-red-500 p-5">
-          <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Wrong Era</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">Don't use 2024 footage when the script is about 1986.</p>
-          <p class="text-sm text-emerald-700 dark:text-emerald-400 font-medium">Search for archival footage or use a period-appropriate still image.</p>
-        </div>
-        <!-- Mistake 2 -->
-        <div class="rounded-xl bg-slate-50 dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 border-l-4 border-l-red-500 p-5">
-          <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Boring Option</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">If you found two clips for the same line, you used the wrong one.</p>
-          <p class="text-sm text-emerald-700 dark:text-emerald-400 font-medium">Always pick the more visually interesting option &mdash; a strong image beats a weak video.</p>
-        </div>
-        <!-- Mistake 3 -->
-        <div class="rounded-xl bg-slate-50 dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 border-l-4 border-l-red-500 p-5">
-          <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Not Enough Material</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">If you're under 75 B-roll clips and 55 images, you're not done.</p>
-          <p class="text-sm text-emerald-700 dark:text-emerald-400 font-medium">Go back and search more before submitting. The editor cannot work with gaps.</p>
-        </div>
-        <!-- Mistake 4 -->
-        <div class="rounded-xl bg-slate-50 dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 border-l-4 border-l-red-500 p-5">
-          <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Stock Footage</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">Generic "people in suits walking" adds zero value.</p>
-          <p class="text-sm text-emerald-700 dark:text-emerald-400 font-medium">Search "[person name] interview" or "[person] CNBC" before resorting to stock.</p>
-        </div>
-        <!-- Mistake 5 -->
-        <div class="rounded-xl bg-slate-50 dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 border-l-4 border-l-red-500 p-5">
-          <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Silent Gaps</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">Never silently skip a line that has no visual &mdash; the editor won't know it's missing.</p>
-          <p class="text-sm text-emerald-700 dark:text-emerald-400 font-medium">Flag it explicitly: <code class="font-mono text-xs">[NO B-ROLL FOUND - need alternative]</code></p>
-        </div>
-        <!-- Mistake 6 -->
-        <div class="rounded-xl bg-slate-50 dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 border-l-4 border-l-red-500 p-5">
-          <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Titles Instead of URLs</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">The editor needs to find the exact clip in 5 seconds, not guess which video you mean.</p>
-          <p class="text-sm text-emerald-700 dark:text-emerald-400 font-medium">Always use the raw YouTube URL with exact start and end timestamps.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <h3>Timestamp Anchoring (Post Rough-Cut)</h3>
+  <p>After rough-cut, add the video timeline timestamp so the editor knows exactly where each asset goes:</p>
+  <div class="format-block"><span class="label">Format</span>MMSS - [asset reference]
+0342 - [https://youtube.com/watch?v=abc, 1:03 - 1:08]</div>
+</section>
 
-  <!-- ==================== SECTION 5: RESOURCES & APPENDIX ==================== -->
-  <section id="appendix" class="py-16 sm:py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <details class="rounded-xl bg-white dark:bg-[#1B2A4A] border border-slate-200 dark:border-slate-700/50 overflow-hidden">
-        <summary class="flex items-center justify-between cursor-pointer px-6 sm:px-8 py-5 hover:bg-slate-50 dark:hover:bg-[#1E3055] transition-colors select-none">
-          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Resources &amp; Detailed Reference</h2>
-          <svg class="w-5 h-5 text-slate-400 dark:text-slate-500 flex-shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-        </summary>
+<!-- ============ HOOK SECTION ============ -->
+<section id="hook">
+  <h2><span class="ch-label">19</span>Hook Section (First 60-90 Seconds)</h2>
+  <p>The hook is the most visually dense part of the video. The goal is to grab attention immediately.</p>
+  <ul>
+    <li><strong>Almost zero host face time</strong> in the first 10-15 seconds</li>
+    <li>Rapid-fire clips (2-4 seconds each) from multiple sources before the host appears</li>
+    <li>Each hook question paired with a <strong>specific, relevant visual</strong> &mdash; not a generic Wall Street shot</li>
+    <li>In the Solomon doc, the hook cuts between an interview clip, a Bloomberg segment, DJ footage at Lollapalooza, and a news reel &mdash; <strong>4 different visual sources in the first 45 seconds</strong></li>
+    <li>The hook should feel like a movie trailer: fast, punchy, every frame earns its place</li>
+  </ul>
+</section>
 
-        <div class="px-6 sm:px-8 pb-8 pt-2 space-y-10 border-t border-slate-200 dark:border-slate-700/50">
+<!-- ============ TRANSITIONS ============ -->
+<section id="transitions">
+  <h2><span class="ch-label">20</span>Section Transitions</h2>
+  <p>When the script moves between major sections (e.g., "Early Career" to "Goldman Era"), there should be a visual bridge. Do not just cut from the host talking about one era to another.</p>
+  <ul>
+    <li>Use a <strong>"bridge clip"</strong> from an interview or speech that introduces the next topic (e.g., Blankfein saying "I want to introduce the next CEO of Goldman Sachs")</li>
+    <li>Custom timeline visuals or historical footage to reset the viewer's mental timeline</li>
+    <li>If no bridge clip exists, use a full-screen title card, a dramatic still image, or a custom visual</li>
+  </ul>
+</section>
 
-          <!-- Source Priority Ranking -->
-          <div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Source Priority Ranking</h3>
-            <div class="overflow-x-auto">
-              <table class="w-full text-sm text-left">
-                <thead>
-                  <tr class="border-b border-slate-200 dark:border-slate-700">
-                    <th class="py-2 pr-4 font-semibold text-slate-500 dark:text-slate-400">Priority</th>
-                    <th class="py-2 pr-4 font-semibold text-slate-500 dark:text-slate-400">Source Type</th>
-                    <th class="py-2 pr-4 font-semibold text-slate-500 dark:text-slate-400">Examples</th>
-                    <th class="py-2 font-semibold text-slate-500 dark:text-slate-400">Quality</th>
-                  </tr>
-                </thead>
-                <tbody class="text-slate-700 dark:text-slate-300">
-                  <tr class="border-b border-slate-100 dark:border-slate-700/50">
-                    <td class="py-2.5 pr-4 font-bold text-emerald-600 dark:text-emerald-400">1 (Best)</td>
-                    <td class="py-2.5 pr-4">TV interviews &amp; news coverage</td>
-                    <td class="py-2.5 pr-4">Bloomberg, CNBC, Fox Business interviews</td>
-                    <td class="py-2.5">Highest impact</td>
-                  </tr>
-                  <tr class="border-b border-slate-100 dark:border-slate-700/50">
-                    <td class="py-2.5 pr-4 font-bold">2</td>
-                    <td class="py-2.5 pr-4">Official company footage</td>
-                    <td class="py-2.5 pr-4">Earnings calls, investor days, conference keynotes</td>
-                    <td class="py-2.5">Strong credibility</td>
-                  </tr>
-                  <tr class="border-b border-slate-100 dark:border-slate-700/50">
-                    <td class="py-2.5 pr-4 font-bold">3</td>
-                    <td class="py-2.5 pr-4">Documentaries / biographical clips</td>
-                    <td class="py-2.5 pr-4">Existing docs, biography channels</td>
-                    <td class="py-2.5">Good depth</td>
-                  </tr>
-                  <tr class="border-b border-slate-100 dark:border-slate-700/50">
-                    <td class="py-2.5 pr-4 font-bold">4</td>
-                    <td class="py-2.5 pr-4">General financial news footage</td>
-                    <td class="py-2.5 pr-4">Market floor, trading screens</td>
-                    <td class="py-2.5">Filler only</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2.5 pr-4 font-bold text-red-600 dark:text-red-400">5 (Last)</td>
-                    <td class="py-2.5 pr-4">Stock footage</td>
-                    <td class="py-2.5 pr-4">Generic office, skylines</td>
-                    <td class="py-2.5">Under 10% max</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+<!-- ============ METAPHOR CLIPS ============ -->
+<section id="metaphors">
+  <h2><span class="ch-label">21</span>Metaphor &amp; Analogy Clips</h2>
+  <p>When the script uses a metaphor, the B-roll should <strong>visualize that metaphor literally</strong>. This is one of the most impactful techniques in our documentaries.</p>
 
-          <!-- Search Queries That Work -->
-          <div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Search Queries That Work</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div class="rounded-lg bg-slate-50 dark:bg-[#0F1729] p-4">
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">YouTube</div>
-                <div class="space-y-1 font-mono text-xs text-slate-700 dark:text-slate-300">
-                  <div>[person] interview</div>
-                  <div>[person] Bloomberg / CNBC</div>
-                  <div>[person] documentary</div>
-                  <div>[company] news / scandal / history</div>
-                  <div>[company] [decade, e.g. "1980s"]</div>
-                </div>
-              </div>
-              <div class="rounded-lg bg-slate-50 dark:bg-[#0F1729] p-4">
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Google Images</div>
-                <div class="space-y-1 font-mono text-xs text-slate-700 dark:text-slate-300">
-                  <div>[person] young / early career / college</div>
-                  <div>[person] [year]</div>
-                  <div>[event] news article</div>
-                  <div>[company] logo</div>
-                </div>
-              </div>
-              <div class="rounded-lg bg-slate-50 dark:bg-[#0F1729] p-4">
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">News Archives</div>
-                <div class="space-y-1 font-mono text-xs text-slate-700 dark:text-slate-300">
-                  <div>WSJ, Bloomberg, NYT, Financial Times</div>
-                  <div>Search exact headlines</div>
-                  <div>Search unique phrases in quotes</div>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div class="callout ok">
+    <div class="callout-title">Example from Solomon Doc</div>
+    <p>When the script says Goldman rejected Solomon, the B-roll shows a basketball player getting his shot blocked. Arrows label the dunker "Solomon" and the blocker "Goldman Sachs." This is the kind of creative, specific visual that makes our videos distinctive.</p>
+  </div>
 
-          <!-- Historical Accuracy Rules -->
-          <div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Historical Accuracy Rules</h3>
-            <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-              <li class="flex gap-2"><span class="text-slate-400 dark:text-slate-600 select-none">&bull;</span>If the script discusses 1986, the footage must be from the 1980s or visually neutral</li>
-              <li class="flex gap-2"><span class="text-slate-400 dark:text-slate-600 select-none">&bull;</span>Search "[person name] young" or "[person name] early career" for age-appropriate photos</li>
-              <li class="flex gap-2"><span class="text-slate-400 dark:text-slate-600 select-none">&bull;</span>For defunct companies (Drexel Burnham Lambert, Bear Stearns), look for archival news clips</li>
-              <li class="flex gap-2"><span class="text-slate-400 dark:text-slate-600 select-none">&bull;</span>When no era-appropriate footage exists, use a still image from that time period instead</li>
-            </ul>
-          </div>
+  <p>When you encounter a metaphor in the script, think: <em>what would this look like if I filmed it?</em> Then find a clip that matches.</p>
+</section>
 
-          <!-- Asset Reuse Policy -->
-          <div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Asset Reuse Policy</h3>
-            <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300">
-              <li class="flex gap-2"><span class="text-slate-400 dark:text-slate-600 select-none">&bull;</span>Some reuse is normal: the Solomon doc reuses 23 image sources and 11 B-roll sources</li>
-              <li class="flex gap-2"><span class="text-slate-400 dark:text-slate-600 select-none">&bull;</span>A photo of a person can appear multiple times across different sections</li>
-              <li class="flex gap-2"><span class="text-slate-400 dark:text-slate-600 select-none">&bull;</span>But hit the unique source minimums FIRST (75 B-roll, 55 images) before reusing</li>
-              <li class="flex gap-2"><span class="text-slate-400 dark:text-slate-600 select-none">&bull;</span>Never reuse the same clip for two completely different narrative points</li>
-            </ul>
-          </div>
+<!-- ============ ARTICLE HIGHLIGHTS ============ -->
+<section id="highlights">
+  <h2><span class="ch-label">22</span>Article &amp; Document Highlights</h2>
+  <p>One of the most distinctive rareliquid techniques: showing news articles on screen with specific phrases highlighted.</p>
+  <ul>
+    <li>When the script references a specific claim, show the <strong>actual article</strong> with the relevant phrase highlighted</li>
+    <li>When the script references a data point (e.g., "95 hours a week"), show the <strong>source document</strong> with that number highlighted</li>
+    <li>Always find the <strong>original article</strong>, not a summary or a tweet about it</li>
+    <li>Screenshot the article itself, crop to the relevant section, and note which phrase to highlight</li>
+  </ul>
+</section>
 
-          <!-- Ground Truth Data -->
-          <div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Ground Truth Data (From Our Published Videos)</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">JPM Documentary (12:31)</h4>
-                <table class="w-full text-xs">
-                  <thead>
-                    <tr class="border-b border-slate-200 dark:border-slate-700">
-                      <th class="py-1.5 pr-3 text-left font-semibold text-slate-500 dark:text-slate-400">Asset</th>
-                      <th class="py-1.5 pr-3 text-left font-semibold text-slate-500 dark:text-slate-400">Unique</th>
-                      <th class="py-1.5 pr-3 text-left font-semibold text-slate-500 dark:text-slate-400">Placements</th>
-                      <th class="py-1.5 text-left font-semibold text-slate-500 dark:text-slate-400">Avg Duration</th>
-                    </tr>
-                  </thead>
-                  <tbody class="text-slate-700 dark:text-slate-300">
-                    <tr class="border-b border-slate-100 dark:border-slate-700/50"><td class="py-1.5 pr-3">B-Roll Video</td><td class="py-1.5 pr-3 font-mono">91</td><td class="py-1.5 pr-3 font-mono">109</td><td class="py-1.5 font-mono">5.5s</td></tr>
-                    <tr class="border-b border-slate-100 dark:border-slate-700/50"><td class="py-1.5 pr-3">Still Images</td><td class="py-1.5 pr-3 font-mono">57</td><td class="py-1.5 pr-3 font-mono">67</td><td class="py-1.5 font-mono">3.5s</td></tr>
-                    <tr><td class="py-1.5 pr-3">Custom Visuals</td><td class="py-1.5 pr-3 font-mono">1</td><td class="py-1.5 pr-3 font-mono">1</td><td class="py-1.5 font-mono">8.0s</td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <div>
-                <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Solomon Documentary (18:22)</h4>
-                <table class="w-full text-xs">
-                  <thead>
-                    <tr class="border-b border-slate-200 dark:border-slate-700">
-                      <th class="py-1.5 pr-3 text-left font-semibold text-slate-500 dark:text-slate-400">Asset</th>
-                      <th class="py-1.5 pr-3 text-left font-semibold text-slate-500 dark:text-slate-400">Unique</th>
-                      <th class="py-1.5 pr-3 text-left font-semibold text-slate-500 dark:text-slate-400">Placements</th>
-                      <th class="py-1.5 text-left font-semibold text-slate-500 dark:text-slate-400">Avg Duration</th>
-                    </tr>
-                  </thead>
-                  <tbody class="text-slate-700 dark:text-slate-300">
-                    <tr class="border-b border-slate-100 dark:border-slate-700/50"><td class="py-1.5 pr-3">B-Roll Video</td><td class="py-1.5 pr-3 font-mono">74</td><td class="py-1.5 pr-3 font-mono">96</td><td class="py-1.5 font-mono">6.4s</td></tr>
-                    <tr class="border-b border-slate-100 dark:border-slate-700/50"><td class="py-1.5 pr-3">Still Images</td><td class="py-1.5 pr-3 font-mono">68</td><td class="py-1.5 pr-3 font-mono">96</td><td class="py-1.5 font-mono">4.7s</td></tr>
-                    <tr><td class="py-1.5 pr-3">Custom Visuals</td><td class="py-1.5 pr-3 font-mono">3</td><td class="py-1.5 pr-3 font-mono">26</td><td class="py-1.5 font-mono">9.4s</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+<!-- ============ SHOW DON'T TELL ============ -->
+<section id="show-dont-tell">
+  <h2><span class="ch-label">23</span>Show, Don't Tell</h2>
+  <p>Every time the script names a person, company, place, or product, something visual should appear.</p>
 
-          <!-- Submission Checklist -->
-          <div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Submission Checklist</h3>
-            <div class="space-y-2.5 text-sm">
-              <label class="flex items-start gap-3 cursor-pointer group">
-                <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500">
-                <span class="text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Every script line has at least one visual reference</span>
-              </label>
-              <label class="flex items-start gap-3 cursor-pointer group">
-                <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500">
-                <span class="text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">All B-roll uses raw YouTube URLs with exact timestamps</span>
-              </label>
-              <label class="flex items-start gap-3 cursor-pointer group">
-                <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500">
-                <span class="text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">All still images use [pic N] format</span>
-              </label>
-              <label class="flex items-start gap-3 cursor-pointer group">
-                <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500">
-                <span class="text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Highlight/zoom instructions added where needed</span>
-              </label>
-              <label class="flex items-start gap-3 cursor-pointer group">
-                <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500">
-                <span class="text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">WITH AUDIO marked where applicable</span>
-              </label>
-              <label class="flex items-start gap-3 cursor-pointer group">
-                <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500">
-                <span class="text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Gaps flagged with [NO B-ROLL FOUND]</span>
-              </label>
-              <label class="flex items-start gap-3 cursor-pointer group">
-                <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500">
-                <span class="text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Images uploaded to Slack as folder (1.png, 2.png, 3.png)</span>
-              </label>
-              <label class="flex items-start gap-3 cursor-pointer group">
-                <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500">
-                <span class="text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">All images minimum 1280x720, no watermarks</span>
-              </label>
-              <label class="flex items-start gap-3 cursor-pointer group">
-                <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500">
-                <span class="text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Custom visual HTML files included (if any)</span>
-              </label>
-              <div class="pt-3 border-t border-slate-200 dark:border-slate-700/50">
-                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">Summary Counts (fill in before submitting)</div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  <div class="rounded-lg bg-slate-50 dark:bg-[#0F1729] p-3">
-                    <div class="text-xs text-slate-400 dark:text-slate-500 mb-1">Script duration</div>
-                    <div class="text-sm font-bold text-slate-900 dark:text-white">___ minutes</div>
-                  </div>
-                  <div class="rounded-lg bg-slate-50 dark:bg-[#0F1729] p-3">
-                    <div class="text-xs text-slate-400 dark:text-slate-500 mb-1">Unique B-roll sources</div>
-                    <div class="text-sm font-bold text-slate-900 dark:text-white">___ <span class="text-xs font-normal text-slate-400">(target: 75-90)</span></div>
-                  </div>
-                  <div class="rounded-lg bg-slate-50 dark:bg-[#0F1729] p-3">
-                    <div class="text-xs text-slate-400 dark:text-slate-500 mb-1">Unique still images</div>
-                    <div class="text-sm font-bold text-slate-900 dark:text-white">___ <span class="text-xs font-normal text-slate-400">(target: 55-70)</span></div>
-                  </div>
-                  <div class="rounded-lg bg-slate-50 dark:bg-[#0F1729] p-3">
-                    <div class="text-xs text-slate-400 dark:text-slate-500 mb-1">Custom visuals</div>
-                    <div class="text-sm font-bold text-slate-900 dark:text-white">___ <span class="text-xs font-normal text-slate-400">(target: 1-3)</span></div>
-                  </div>
-                  <div class="rounded-lg bg-slate-50 dark:bg-[#0F1729] p-3">
-                    <div class="text-xs text-slate-400 dark:text-slate-500 mb-1">Unfilled gaps</div>
-                    <div class="text-sm font-bold text-slate-900 dark:text-white">___ <span class="text-xs font-normal text-slate-400">(target: 0)</span></div>
-                  </div>
-                  <div class="rounded-lg bg-slate-50 dark:bg-[#0F1729] p-3">
-                    <div class="text-xs text-slate-400 dark:text-slate-500 mb-1">Stock footage %</div>
-                    <div class="text-sm font-bold text-slate-900 dark:text-white">___% <span class="text-xs font-normal text-slate-400">(target: &lt;10%)</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  <table>
+    <thead><tr><th>Script Mentions...</th><th>You Should Show...</th></tr></thead>
+    <tbody>
+      <tr><td>A person by name</td><td>Footage of that person (interview, news clip) or a high-quality photo</td></tr>
+      <tr><td>A company by name</td><td>Company logo overlay, office building, or news coverage of that company</td></tr>
+      <tr><td>A specific location</td><td>Photo or footage of that location (campus, building, city)</td></tr>
+      <tr><td>A product or service</td><td>Product screenshot, app interface, or promotional material</td></tr>
+      <tr><td>A financial figure or metric</td><td>A chart, filing screenshot, or custom HTML visual with the number</td></tr>
+      <tr><td>A quote or statement</td><td>The source article/document with the quote highlighted</td></tr>
+      <tr><td>A historical event</td><td>Era-appropriate news footage or archival photography</td></tr>
+      <tr><td>A concept (e.g., "junk bonds")</td><td>An explainer visual, relevant news clip, or custom graphic</td></tr>
+    </tbody>
+  </table>
 
-        </div>
-      </details>
-    </div>
-  </section>
+  <p><strong>Ad sections</strong> should be treated with the same visual density as main content. Product screenshots, course interfaces, logos &mdash; keep the screen active.</p>
+</section>
 
-  <!-- ==================== FOOTER ==================== -->
-  <footer class="py-8 border-t border-slate-200 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center text-sm text-slate-400 dark:text-slate-600">
-      <span class="font-semibold text-slate-500 dark:text-slate-500">rareliquid</span> &middot; Video Production Pipeline Guidelines &middot; v1.1
-    </div>
-  </footer>
+<!-- ============ 7-STEP WORKFLOW ============ -->
+<section id="workflow">
+  <h2><span class="ch-label">24</span>The 7-Step Workflow</h2>
+  <p>This is the exact workflow for every script. Do not skip steps.</p>
 
-  <!-- ==================== SCRIPTS ==================== -->
-  <script>
-    function toggleTheme() {
-      document.documentElement.classList.toggle('dark');
-      localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-    }
-    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
-      a.addEventListener('click', function(e) {
-        e.preventDefault();
-        var target = document.querySelector(a.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-  </script>
+  <h3>Step 1: Watch the Reference Documentaries</h3>
+  <p>Watch both the <a href="https://youtu.be/bnLFyTIL5lQ" target="_blank">JPM doc</a> and the <a href="https://www.youtube.com/watch?v=SfIjrEJt3SQ" target="_blank">Solomon doc</a> in full. Note the visual rhythm.</p>
+
+  <h3>Step 2: Full Script Read-Through</h3>
+  <p>Read the entire script once without annotating. Understand the arc, key people, companies, events, and historical time periods covered.</p>
+
+  <h3>Step 3: Entity Extraction</h3>
+  <p>List every unique entity:</p>
+  <ul>
+    <li><strong>People</strong> (full names, roles, time periods discussed)</li>
+    <li><strong>Companies</strong> (including former names, subsidiaries, and the era being discussed)</li>
+    <li><strong>Events</strong> (IPOs, scandals, promotions, product launches, with specific years)</li>
+    <li><strong>Data points</strong> (revenue figures, percentages, timelines, survey results)</li>
+    <li><strong>Quotes and statements</strong> (attributed lines that might need on-screen text or article source)</li>
+    <li><strong>Metaphors and analogies</strong> ("cage match," "caught the bus by the tailpipe" &mdash; these need creative visual treatment)</li>
+  </ul>
+
+  <h3>Step 4: Bulk Search Phase</h3>
+  <p>For each entity, conduct a dedicated search session. Batch searches by entity, not line-by-line. Log every usable source in a spreadsheet with: URL, timestamp range, description, era/year, and which script lines it serves.</p>
+
+  <h3>Step 5: Line-by-Line Assignment</h3>
+  <p>Assign at least one visual to every line using the "Show, Don't Tell" table. Zero orphan lines.</p>
+
+  <h3>Step 6: Gap Audit</h3>
+  <p>Check for:</p>
+  <ul>
+    <li>Any line with no visual assigned &rarr; go back to Step 4</li>
+    <li>Host face on screen for more than 5 seconds &rarr; add B-roll or images</li>
+    <li>3+ consecutive still images &rarr; find a video clip to break it up</li>
+    <li>Stock footage used &rarr; try one more time for a Tier 1-3 alternative</li>
+    <li>Era mismatches &rarr; replace with era-appropriate alternative</li>
+    <li>Boring clips &rarr; search for a more visually interesting option</li>
+    <li>Section transitions &rarr; ensure each has a visual bridge</li>
+  </ul>
+
+  <h3>Step 7: Final Count Check</h3>
+  <p>Before submitting, verify:</p>
+  <ul>
+    <li>Total B-roll clips: meets per-minute minimum</li>
+    <li>Total still images: meets per-minute minimum</li>
+    <li>Stock footage: under 10%</li>
+    <li>Lines with no visual: zero</li>
+    <li>Era mismatches: zero</li>
+  </ul>
+  <p>If any check fails, go back to Step 4 before submitting.</p>
+</section>
+
+<!-- ============ SEARCH QUERIES ============ -->
+<section id="search-queries">
+  <h2><span class="ch-label">25</span>Search Queries That Work</h2>
+  <p>These produced usable results in past productions. Use the same patterns.</p>
+
+  <h3>YouTube</h3>
+  <pre><code>[person] interview
+[person] Bloomberg
+[person] CNBC
+[person] documentary
+[company] news
+[company] scandal
+[company] history
+[company] [decade, e.g. "1980s"]</code></pre>
+
+  <h3>Google Images</h3>
+  <pre><code>[person] young
+[person] early career
+[person] college
+[person] [year]
+[event] news article
+[company] logo
+[school/company name] campus</code></pre>
+
+  <h3>News Archives</h3>
+  <p>WSJ, Bloomberg, NYT, Financial Times &mdash; search exact headlines or unique phrases in quotes. Always try these as separate searches from YouTube and Google Images.</p>
+</section>
+
+<!-- ============ COMMON MISTAKES ============ -->
+<section id="mistakes">
+  <h2><span class="ch-label">&oplus;</span>Common Mistakes</h2>
+  <p>Every one of these has caused a revision round in past productions.</p>
+
+  <table>
+    <thead><tr><th>Mistake</th><th>Why It's Wrong</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Modern footage for historical events</strong></td><td>Creates a visual mismatch the audience notices</td><td>Search archival footage or use a period-appropriate still image</td></tr>
+      <tr><td><strong>Boring clip when a better one exists</strong></td><td>A plain Baskin-Robbins clip was replaced because a more interesting one existed</td><td>Compare options, pick the one with more visual energy</td></tr>
+      <tr><td><strong>Stock footage when real footage exists</strong></td><td>"People in suits" adds nothing</td><td>Search "[person] interview", "[person] CNBC" first</td></tr>
+      <tr><td><strong>Video titles instead of URLs</strong></td><td>Editor needs to find the exact clip in 5 seconds</td><td>Always raw YouTube URLs with exact timestamps</td></tr>
+      <tr><td><strong>Host on screen 10+ seconds</strong></td><td>Feels like a lecture, not a documentary</td><td>Break up every 3-5 seconds with B-roll or images</td></tr>
+      <tr><td><strong>Clips under 3 seconds</strong></td><td>Flash for 1-2 seconds and feel jarring</td><td>Minimum 3 seconds per clip; extend with a still image if needed</td></tr>
+      <tr><td><strong>Silently skipping lines</strong></td><td>Editor discovers the gap during editing, pipeline stalls</td><td>Flag: [NO B-ROLL FOUND - need alternative]</td></tr>
+      <tr><td><strong>Reusing same clip for different lines</strong></td><td>Repetition looks lazy</td><td>Each line needs a unique visual</td></tr>
+      <tr><td><strong>Company logo instead of real footage</strong></td><td>A logo is the weakest possible visual</td><td>Search for office footage, news coverage, conference clips</td></tr>
+      <tr><td><strong>3+ still images in a row</strong></td><td>Video feels like a slideshow</td><td>Break with at least one video clip every 2 images</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ CHECKLIST ============ -->
+<section id="checklist">
+  <h2><span class="ch-label">&oplus;</span>Deliverables Checklist</h2>
+  <p>Verify every item before submitting. If any is incomplete, your submission is not ready.</p>
+
+  <h3>Annotated Script</h3>
+  <div class="checklist">
+    <label><input type="checkbox"> Every line has at least one visual reference</label>
+    <label><input type="checkbox"> All B-roll uses raw YouTube URLs with exact start-end timestamps</label>
+    <label><input type="checkbox"> All still images use [pic N] format with highlight instructions where needed</label>
+    <label><input type="checkbox"> Audio instructions marked explicitly (WITH AUDIO)</label>
+    <label><input type="checkbox"> Overlay instructions noted inline (logos, arrows, text)</label>
+    <label><input type="checkbox"> Section transitions have visual bridges</label>
+    <label><input type="checkbox"> Metaphor/analogy lines have creative visual treatments</label>
+    <label><input type="checkbox"> Gaps flagged with [NO B-ROLL FOUND - need alternative]</label>
+  </div>
+
+  <h3>Image Folder</h3>
+  <div class="checklist">
+    <label><input type="checkbox"> All still images uploaded to Slack as a single folder</label>
+    <label><input type="checkbox"> Named sequentially: 1.png, 2.png, 3.png</label>
+    <label><input type="checkbox"> Every image minimum 1280x720</label>
+    <label><input type="checkbox"> No watermarks, no low-res, no uncropped browser screenshots</label>
+  </div>
+
+  <h3>Summary Counts (Top of Submission)</h3>
+  <pre><code>Script duration:       ___ minutes
+Unique B-roll sources: ___ (target: 75-90)
+Unique still images:   ___ (target: 55-70)
+Custom visuals:        ___ (target: 1-3)
+Unfilled gaps:         ___ (target: 0)
+Stock footage %:       ___% (target: &lt;10%)
+Era mismatches:        ___ (target: 0)</code></pre>
+</section>
+
+<!-- ============ QUICK REFERENCE ============ -->
+<section id="quick-ref">
+  <h2><span class="ch-label">&oplus;</span>Quick Reference Card</h2>
+
+  <table>
+    <thead><tr><th>Rule</th><th>Standard</th></tr></thead>
+    <tbody>
+      <tr><td>Unique B-Roll sources</td><td>74-91 per video (~83 avg) | 5-7 per minute</td></tr>
+      <tr><td>Unique Still Images</td><td>57-68 per video (~63 avg) | 4-5 per minute</td></tr>
+      <tr><td>Custom Visuals</td><td>1-3 HTML files total (NOT 7-10)</td></tr>
+      <tr><td>Host face between cuts</td><td>2-5 seconds typical. Up to 15s during key moments. Hard ceiling: ~15s.</td></tr>
+      <tr><td>Minimum clip duration</td><td>3 seconds</td></tr>
+      <tr><td>Maximum single clip</td><td>10 seconds (then a cut)</td></tr>
+      <tr><td>Ideal clip length</td><td>4-7 seconds</td></tr>
+      <tr><td>Stock footage ceiling</td><td>Under 10% of total B-roll</td></tr>
+      <tr><td>Unfilled gaps</td><td>Zero</td></tr>
+      <tr><td>Max consecutive stills</td><td>2 (then a video clip must break it up)</td></tr>
+      <tr><td>B-roll format</td><td><code>[raw URL, MM:SS - MM:SS]</code></td></tr>
+      <tr><td>Image format</td><td><code>[pic N]</code> or <code>[pic N, highlight "text"]</code></td></tr>
+      <tr><td>Audio callout</td><td><code>[URL, timestamp, WITH AUDIO]</code></td></tr>
+      <tr><td>Source priority</td><td>Interviews > Official > Documentary > News > Stock</td></tr>
+      <tr><td>Historical rule</td><td>Match the era of the event being discussed</td></tr>
+      <tr><td>Image naming</td><td>1.png, 2.png, 3.png...</td></tr>
+      <tr><td>Image min resolution</td><td>1280x720</td></tr>
+    </tbody>
+  </table>
+
+  <div class="pq">If you are ever unsure whether you have enough material, you don't. Go find more. Overshooting by 20% is always preferable to a revision round that delays the entire production timeline.</div>
+</section>
+
+</div><!-- /content-wrap -->
+</div><!-- /main -->
+
+<footer>
+  <p>rareliquid &middot; Video Production Pipeline Guidelines &middot; v1.1</p>
+</footer>
+
+<script>
+/* Theme toggle */
+(function(){
+  var t=document.getElementById('themeToggle');
+  if(!t)return;
+  var h=document.documentElement;
+  t.addEventListener('click',function(){
+    var isLight=h.getAttribute('data-theme')==='light';
+    if(isLight){h.removeAttribute('data-theme');try{localStorage.setItem('rl-theme','dark')}catch(e){}}
+    else{h.setAttribute('data-theme','light');try{localStorage.setItem('rl-theme','light')}catch(e){}}
+  });
+})();
+
+/* Sidebar hamburger + active link tracking */
+(function(){
+  var ham=document.getElementById('hamburger');
+  var sb=document.getElementById('sidebar');
+  var ov=document.getElementById('sidebar-overlay');
+  if(!ham||!sb||!ov)return;
+  ham.addEventListener('click',function(){ham.classList.toggle('open');sb.classList.toggle('open');ov.classList.toggle('open')});
+  ov.addEventListener('click',function(){ham.classList.remove('open');sb.classList.remove('open');ov.classList.remove('open')});
+  sb.querySelectorAll('.toc-link').forEach(function(l){l.addEventListener('click',function(){if(window.innerWidth<=900){ham.classList.remove('open');sb.classList.remove('open');ov.classList.remove('open')}})});
+  var secs=document.querySelectorAll('section[id]');
+  var links=document.querySelectorAll('.toc-link');
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){links.forEach(function(l){l.classList.remove('active')});var active=sb.querySelector('a[href="#'+entry.target.id+'"]');if(active)active.classList.add('active')}})},{rootMargin:'-20% 0px -70% 0px'});
+  secs.forEach(function(s){obs.observe(s)});
+})();
+</script>
 </body>
 </html>
