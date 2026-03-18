@@ -23,11 +23,8 @@
   <div class="toc-group">
     <div class="toc-group-title">Start Here</div>
     <a href="start-here.html#required-viewing" class="toc-link"><span class="toc-num">01</span>Required Viewing</a>
-  </div>
-  <div class="toc-group">
-    <div class="toc-group-title">How Much You Need</div>
-    <a href="how-much.html#targets" class="toc-link"><span class="toc-num">02</span>Per-Minute Targets</a>
-    <a href="how-much.html#variety" class="toc-link"><span class="toc-num">03</span>Visual Variety Rule</a>
+    <a href="start-here.html#targets" class="toc-link"><span class="toc-num">02</span>Per-Minute Targets</a>
+    <a href="start-here.html#variety" class="toc-link"><span class="toc-num">03</span>Visual Variety Rule</a>
   </div>
   <div class="toc-group">
     <div class="toc-group-title">Asset Types</div>
@@ -76,7 +73,7 @@
 
 <div class="page-header">
   <h1>Start Here</h1>
-  <p>Required viewing and context for the B-roll pipeline.</p>
+  <p>Required viewing, per-minute targets, and visual variety rules.</p>
 </div>
 
 <section id="required-viewing">
@@ -110,9 +107,52 @@
   <p>This guide exists because past B-roll passes only covered about <strong>50-60% of what was needed</strong>. The most common problems were not enough total clips, clips only loosely related to what was being said, generic stock footage used when real interview or news clips existed, present-day footage used for historical events, and boring clips chosen when more visually interesting alternatives were available. Follow every section of this guide to avoid those issues.</p>
 </section>
 
+<section id="targets">
+  <h2><span class="ch-label">02</span>How Much You Need</h2>
+  <p>Use the slider to set your script duration. The numbers below show how many assets you need to find.</p>
+
+  <div class="calc-wrap">
+    <div class="calc-slider-row">
+      <span style="font-size:.85rem;color:var(--text-muted)">Script length:</span>
+      <input type="range" id="durSlider" min="1" max="20" value="15" step="1">
+      <div class="calc-dur"><span id="durVal">15</span> min</div>
+    </div>
+    <div class="calc-grid">
+      <div class="calc-card broll">
+        <div class="calc-num" id="calcBroll">75 &ndash; 90</div>
+        <div class="calc-lbl">Unique B-Roll Clips</div>
+      </div>
+      <div class="calc-card stills">
+        <div class="calc-num" id="calcStills">55 &ndash; 70</div>
+        <div class="calc-lbl">Unique Still Images</div>
+      </div>
+      <div class="calc-card custom">
+        <div class="calc-num" id="calcCustom">1 &ndash; 3</div>
+        <div class="calc-lbl">Custom Visuals (HTML)</div>
+      </div>
+      <div class="calc-card total">
+        <div class="calc-num" id="calcTotal">~148</div>
+        <div class="calc-lbl">Total Unique Assets</div>
+      </div>
+      <div class="calc-card stock">
+        <div class="calc-num" id="calcStock">&lt; <span id="calcStockN">9</span></div>
+        <div class="calc-lbl">Max Stock Footage Clips (10%)</div>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:.9rem;color:var(--text-muted)">These are hard minimums, not suggestions. When in doubt, overshoot &mdash; it is always better to deliver too much than too little. If you finish under these counts, go back and find more.</p>
+</section>
+
+<section id="variety">
+  <h2><span class="ch-label">03</span>Visual Variety Rule</h2>
+  <p><strong>Never have 3 or more consecutive still images without a video clip in between.</strong> If you find yourself stacking images back-to-back, search harder for a video source to break up the sequence. The visual rhythm should alternate between video clips, still images, and the host.</p>
+  <p>Approximately <strong>16 visual changes happen per minute</strong> in our documentaries. That means a new cut roughly every 3-4 seconds.</p>
+</section>
+
 <div class="page-nav">
   <a href="index.html">&larr; Home</a>
-  <a href="how-much.html" class="next">How Much You Need &rarr;</a>
+  <a href="asset-types.html" class="next">Asset Types &rarr;</a>
 </div>
 
 </div></div>
