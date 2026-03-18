@@ -31,7 +31,6 @@
     <a href="asset-types.html#stills" class="toc-link"><span class="toc-num">05</span>Still Images</a>
     <a href="asset-types.html#broll-audio" class="toc-link"><span class="toc-num">06</span>B-Roll with Audio</a>
     <a href="asset-types.html#custom" class="toc-link"><span class="toc-num">07</span>Custom Visuals</a>
-    <a href="asset-types.html#decision" class="toc-link"><span class="toc-num">08</span>Which Type to Use</a>
   </div>
   <div class="toc-group">
     <div class="toc-group-title">Sourcing & Quality</div>
@@ -47,11 +46,6 @@
     <a href="techniques.html#metaphors" class="toc-link"><span class="toc-num">15</span>Metaphor Clips</a>
     <a href="techniques.html#highlights" class="toc-link"><span class="toc-num">16</span>Article Highlights</a>
     <a href="techniques.html#show-dont-tell" class="toc-link"><span class="toc-num">17</span>Show, Don't Tell</a>
-  </div>
-  <div class="toc-group">
-    <div class="toc-group-title">The Process</div>
-    <a href="process.html#workflow" class="toc-link"><span class="toc-num">18</span>7-Step Workflow</a>
-    <a href="process.html#search-queries" class="toc-link"><span class="toc-num">19</span>Search Queries</a>
   </div>
   <div class="toc-group">
     <div class="toc-group-title">Reference</div>
@@ -96,7 +90,7 @@
   </div>
 
   <h4>Correct Format</h4>
-  <p>Always use this format &mdash; raw YouTube URLs with exact start and end timestamps:</p>
+  <p>Always use this format &mdash; the full YouTube URL, followed by the exact start and end timestamps separated by a dash. Each clip goes in its own set of brackets:</p>
   <div class="format-block">[https://www.youtube.com/watch?v=QZ85VPgCOCM, 0:18 - 0:29]
 [https://www.youtube.com/watch?v=nbs_s6_L_ao, 22:10 - 22:14]</div>
 
@@ -105,12 +99,6 @@
   <div class="format-block bad"><span class="label">Wrong &mdash; Do Not Do These</span>[Goldman Sachs CEO Interview, 0:18 - 0:29]  &larr; No titles, raw URLs only
 [https://youtube.com/watch?v=abc, around 3 min]  &larr; No vague timestamps
 [https://youtube.com/watch?v=abc]                 &larr; Never omit timestamps</div>
-
-  <h4>Providing Alternate Options</h4>
-  <p>If you find two good clips for the same script line, include both separated by "OR" so the best one can be chosen:</p>
-  <div class="format-block">[https://youtube.com/watch?v=abc, 4:05 - 4:09]
-OR
-[https://youtube.com/watch?v=xyz, 16:10 - 16:42]</div>
 </section>
 
 <section id="stills">
@@ -134,10 +122,12 @@ OR
   <h3>Naming Convention</h3>
   <p>Name every image sequentially: <strong>1.png, 2.png, 3.png</strong>. Upload the entire folder to Slack as a batch.</p>
   <h3>How to Annotate</h3>
+  <p>Reference each image by its number. If the image needs special instructions (highlighting a phrase, zooming, panning), add them after a comma. You can combine multiple instructions:</p>
   <div class="format-block"><span class="label">Formats</span>[pic 1]
 [pic 7, highlight "specific text to underline"]
 [pic 12, zoom]
 [pic 15, pan left-to-right]
+[pic 9, zoom in on face]
 [pic 8, zoom and highlight "key phrase"]</div>
 </section>
 
@@ -151,10 +141,6 @@ OR
     <li>An interview subject makes a quote that deserves to be heard directly, not summarized</li>
     <li>A moment of genuine emotion or emphasis that loses impact if paraphrased</li>
   </ul>
-  <div class="callout warn">
-    <div class="callout-title">Warning</div>
-    <p>Overusing "WITH AUDIO" dilutes its impact. If every other clip has original audio, none of them feel special. Reserve this for moments that give the viewer chills. Default to standard B-roll with voiceover.</p>
-  </div>
   <h3>How to Annotate</h3>
   <div class="format-block"><span class="label">Format</span>[https://www.youtube.com/watch?v=xyz, 4:05 - 4:09, WITH AUDIO]</div>
 </section>
@@ -170,9 +156,14 @@ OR
     <li>Company splits, mergers, organizational changes</li>
     <li>Key statistics or quotes that deserve visual emphasis</li>
   </ul>
+  <h3>How to Build These</h3>
+  <p>If there's a chart, data breakdown, or document-style graphic that would look good on screen, use an LLM (Claude Opus 4.6 recommended) to generate an HTML file for it. Send me the HTML file and I can style it to match our theme. This works great for timelines, financial breakdowns, comparison tables &mdash; basically anything where a clean visual beats a random screenshot, or when there are no relevant pictures.</p>
+  <p>See <strong>5:05</strong> (JPM splitting up) and <strong>10:05</strong> (JPM revenue/income data) in the <a href="start-here.html#required-viewing">JPM documentary</a> for examples of what these look like in the final video.</p>
+  <p>LLMs, especially Claude, are surprisingly good at this and it usually only takes a prompt or two. Just make sure to have it <strong>cite sources</strong> if you're not 100% sure about the data, since they can hallucinate. Ideally, instruct it to pull from online sources so everything is verifiable.</p>
+
   <h3>How to Annotate</h3>
-  <div class="format-block"><span class="label">Format</span>[custom visual: Solomon career timeline Irving &rarr; Drexel &rarr; Bear &rarr; Goldman]
-[custom visual: Goldman stock vs JPM vs MS since 2018]</div>
+  <p>Reference custom visuals by filename, just like still images:</p>
+  <div class="format-block"><span class="label">Format</span>[15.html]</div>
   <h3>Quality Checklist</h3>
   <ul>
     <li>All text legible at 1080p</li>
@@ -182,20 +173,16 @@ OR
   </ul>
 </section>
 
-<section id="decision">
-  <h2><span class="ch-label">08</span>Which Type Should I Use?</h2>
-  <p><strong>Still images show information. B-Roll shows people and action. B-Roll with Audio lets the original speaker be heard.</strong> When in doubt, default to Still Image + standard B-Roll.</p>
-  <table>
-    <thead><tr><th>Script Line Type</th><th>Still Image?</th><th>B-Roll?</th><th>B-Roll + Audio?</th></tr></thead>
-    <tbody>
-      <tr><td>"[Name] was born in [City]."</td><td>Yes (photo of person or city)</td><td>Maybe (only if strong interview exists)</td><td>No</td></tr>
-      <tr><td>"[CEO] said '[quote]' in a 2024 call."</td><td>Maybe (article about the quote)</td><td>Yes (conference footage)</td><td>Yes, if the quote is key to the narrative</td></tr>
-      <tr><td>"[Company] was founded in 1987."</td><td>Yes (archival photo, founding docs)</td><td>No (no 1987 video likely exists)</td><td>No</td></tr>
-      <tr><td>"[Subject] was rejected by [Company]."</td><td>No</td><td>Yes (interview or creative metaphor clip)</td><td>No</td></tr>
-      <tr><td>"The market crashed 20% that day."</td><td>Yes (chart, market data screenshot)</td><td>Maybe (traders reacting)</td><td>Maybe (news anchor reporting, WITH AUDIO)</td></tr>
-      <tr><td>"[Person] and [Person] met for the first time."</td><td>No</td><td>Yes (news coverage of the meeting)</td><td>Yes, if video of them together exists</td></tr>
-    </tbody>
-  </table>
+<section id="example">
+  <h2><span class="ch-label">&oplus;</span>Full Example &mdash; Annotated Hook</h2>
+  <p>This is what a properly annotated script looks like. Notice how every sentence has at least one visual, mixing B-roll clips, still images, and B-roll with audio:</p>
+  <div class="card" style="font-size:.92rem;line-height:1.9">
+    <p><strong>HOOK</strong></p>
+    <p>It's March 2008 - and Bear Stearns is collapsing overnight <code>[https://www.youtube.com/watch?v=DcyaQBCGM28, 0:49 - 0:52]</code>. Lehman Brothers soon follows <code>[https://www.youtube.com/watch?v=-MKHah7QQpY, 0:28 - 0:31]</code>, defaulting on billions of mortgage-backed securities. <code>[pic 1]</code></p>
+    <p>The entire financial system is imploding in real time. <code>[https://www.youtube.com/watch?v=l1DBDONn9wQ, 0:02 - 0:06]</code> and when every major bank is on the brink of collapse <code>[https://www.youtube.com/watch?v=nP1FxdmMZpI, 14:02 - 14:04]</code>, only one institution gets the call to save the system: JPMorgan Chase</p>
+    <p>Fast forward to 2023 - and history is repeating itself. Silicon Valley Bank fails <code>[pic 2]</code> in 48 hours <code>[https://www.youtube.com/watch?v=YDwDMF_f5rM, 0:20 - 0:23]</code>. First Republic Bank follows right behind it. And once again, the government turns to the same bank.</p>
+    <p>So why is JPMorgan Chase always the last bank standing <code>[https://www.youtube.com/watch?v=_zrRznfEjK4, 0:38 - 0:40]</code>? And how did it become the most powerful financial institution in America? Today, we break down the full story.</p>
+  </div>
 </section>
 
 <div class="page-nav">

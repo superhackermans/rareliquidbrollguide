@@ -109,9 +109,9 @@ pre code{background:none;padding:0;color:var(--text)}
 .calc-slider-row{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
 .calc-slider-row input[type="range"]{flex:1;accent-color:var(--accent);height:6px;cursor:pointer}
 .calc-dur{font-family:var(--mono);font-size:1.6rem;font-weight:700;color:var(--accent);min-width:5.5ch;text-align:right}
-.calc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.8rem}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.8rem}
 .calc-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center}
-.calc-card .calc-num{font-family:var(--mono);font-size:1.5rem;font-weight:700;line-height:1.2}
+.calc-card .calc-num{font-family:var(--mono);font-size:1.5rem;font-weight:700;line-height:1.2;white-space:nowrap}
 .calc-card .calc-lbl{font-size:.75rem;color:var(--text-muted);margin-top:.3rem}
 .calc-card.broll .calc-num{color:var(--a3)}
 .calc-card.stills .calc-num{color:var(--accent)}
