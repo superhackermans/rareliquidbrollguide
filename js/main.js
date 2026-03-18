@@ -55,11 +55,14 @@
     var sLo=Math.round(m*3.7),sHi=Math.round(m*4.5);
     var cLo=Math.max(1,Math.round(m*0.07)),cHi=Math.min(Math.max(1,Math.round(m*0.2)),5);
     if(cLo>cHi)cLo=cHi;
-    var totalLo=bLo+sLo+cLo,totalHi=bHi+sHi+cHi;
+    var aLo=Math.max(1,Math.round(m*0.2)),aHi=Math.max(1,Math.round(m*0.33));
+    if(aLo>aHi)aLo=aHi;
+    var totalLo=bLo+sLo+cLo+aLo,totalHi=bHi+sHi+cHi+aHi;
     var stockMax=Math.round(bHi*0.1);
     document.getElementById('calcBroll').textContent=bLo+' \u2013 '+bHi;
     document.getElementById('calcStills').textContent=sLo+' \u2013 '+sHi;
     document.getElementById('calcCustom').textContent=cLo+(cLo===cHi?'':' \u2013 '+cHi);
+    document.getElementById('calcAudio').textContent=aLo+(aLo===aHi?'':' \u2013 '+aHi);
     document.getElementById('calcTotal').textContent='~'+Math.round((totalLo+totalHi)/2);
     document.getElementById('calcStockN').textContent=stockMax;
   }
