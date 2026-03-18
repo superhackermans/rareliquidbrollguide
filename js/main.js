@@ -29,7 +29,7 @@
       links.forEach(function(l){
         var href=l.getAttribute('href')||'';
         if(href.indexOf(page)===0||href===page){
-          g.style.background='var(--accent-glow)';
+          g.classList.add('current');
         }
       });
     });
